@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+  <body>
+
+      <div id="GUI">
+  </div>
+
+
+
+
+<script src = "jquery.min.js"         ></script>
+<script src = "Tween.js"              ></script>
+<script src = "three.js"              ></script>
+<script src = "stats.min.js"          ></script>
+<script src = "TrackballControls.js"  ></script>
+<script src = "OBJLoader.js"          ></script>
+<script src = "AudioController.js"    ></script>
+<script src = "Looper.js"             ></script>
+<script src = "AudioTexture.js"       ></script>
+<script src = "Stream.js"             ></script>
+<script src = "underscore.js"         ></script>
+<script src = "ShaderLoader.js"       ></script>
+<script src = "Loader.js"             ></script>
+<script src = "PhysicsRenderer.js"    ></script>
+<script src = "ParticleUtils.js"      ></script>
+<script src = "LoadedAudio.js"        ></script>
+<script src = "dat.gui.min.js"        ></script>
+
+
+<script src = "initThree.js"          ></script>
+<script src = "initJelly.js"      ></script>
+
+<script src = "FurryGroup.js"         ></script>
+<script src = "FurryTail.js"          ></script>
+<script src = "FurryHead.js"          ></script>
+
+
+<script>  
+
+  function c(val){console.log(val);}
+  var container , camera, scene, renderer , stats;
+  var clock;
+
+  var G = {}
+  G.uniforms = {
+    time : { type:"f" , value:0 },
+    dT : { type:"f" , value:0 },
+    t_audio : { type:"t" , value:null },
+    dpr:{ type:"f" , value: window.devicePixelRatio || 1 }
+  }
+
+
+  var mouse =  new THREE.Vector2();
+
+  var loader = new Loader({ numberToLoad: 0 });
+
+  var LOOPS = {}
+
+  //loader.beginLoading();
+  var shaders = new ShaderLoader('shaders');
+  shaders.beginLoad = function(){
+    loader.beginLoading();
+  }
+
+  shaders.endLoad = function(){
+    loader.endLoading();
+  }
+
+  shaders.shaderSetLoaded = function(){
+    //init();
+
+  }
+
+
+
+
+  
+  sceneSize = 10;
+
+  shaders.load( 'ss-furryTail'   , 'furryTail' , 'simulation'  );
+  shaders.load( 'fs-furryTail'   , 'furryTail' , 'fragment'  );
+  shaders.load( 'vs-furryTail'   , 'furryTail' , 'vertex'  );
+
+
+  shaders.load( 'ss-mainTail'   , 'mainTail' , 'simulation'  );
+  shaders.load( 'fs-mainTail'   , 'mainTail' , 'fragment'  );
+  shaders.load( 'vs-mainTail'   , 'mainTail' , 'vertex'  );
+
+  shaders.load( 'ss-furryHead'   , 'furryHead' , 'simulation'  );
+  shaders.load( 'fs-furryHead'   , 'furryHead' , 'fragment'  );
+  shaders.load( 'vs-furryHead'   , 'furryHead' , 'vertex'  );
+
+  shaders.load( 'fs-furryParticles'   , 'furryParticles' , 'fragment'  );
+  shaders.load( 'vs-furryParticles'   , 'furryParticles' , 'vertex'  );
+
+
+  var audioController = new AudioController();
+
+//  audioController.mute.gain.value = 0;
+
+  G.uniforms.t_audio.value = audioController.texture;
+
+
+  loader.beginLoading();
+    var newName = 'andaBit.wav';
+    var note = new LoadedAudio( audioController , newName , {
+      looping:true 
+    });
+
+    LOOPS['death'] = note;
+ //   audioController.notes.push( note );
+     
+    note.onLoad = function(){
+      this.endLoading();
+    }.bind( loader );
+
+
+  var looper          = new Looper( audioController , G.uniforms.time , {
+
+    beatsPerMinute: 122,
+    beatsPerMeasure: 4,
+    measuresPerLoop: 8
+    
+  });
+
+
+  var particleTexture = THREE.ImageUtils.loadTexture( 'icons/cabbibo.png');
+
+
+
+
+    bait = new THREE.Object3D();
+
+
+ // initAudio();
+
+  function init(){
+
+
+
+    initThree();
+    initJelly();
+
+
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 1000;
+    camera.rotation.x = 0;
+    camera.rotation.y = 0;
+    camera.rotation.z = 0;
+    Jelly.init();
+
+
+
+
+
+  }
+
+  function animate(){
+
+    TWEEN.update();
+
+    audioController.update();
+    //controls.update();
+     
+    var delta = clock.getDelta();
+
+
+    G.uniforms.dT.value = delta;
+    G.uniforms.time.value += delta;
+    stats.update();
+
+    Jelly.update();
+    
+    renderer.render( scene , camera );
+    requestAnimationFrame( animate );
+
+
+  }
+
+  $("#startInfo").click( function(){
+
+    loader.liftCurtain();
+    looper.start();
+    animate();
+
+
+    LOOPS['death'].gain.gain.value = 1;
+    LOOPS['death'].play();
+    LOOPS['death'].gain.gain.value = 1;
+   
+  
+  });
+
+
+
+</script>
+
+
+</body>
+</html>
+
+
