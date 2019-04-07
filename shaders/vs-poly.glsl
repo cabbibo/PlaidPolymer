@@ -12,6 +12,7 @@ varying vec3 vLightDir;
 varying float vDisplacement;
 
 varying vec3 vMVPos;
+varying vec3 vWorld;
 
 $simplex
 
@@ -63,6 +64,8 @@ void main(){
 
   vec3 a = texture2D( t_audio , vec2( vNorm.x , 0.0 ) ).xyz;
   vPos += vNorm * a * 20.;
+
+  vWorld = (modelMatrix * vec4(vPos,1.)).xyz;
 
   vMVPos = (modelViewMatrix * vec4( vPos , 1.0 )).xyz;
 

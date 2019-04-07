@@ -26,7 +26,8 @@ function Poly( id , note ){
       new THREE.ShaderMaterial({
       uniforms:{
         t_audio:{type:"t",value:this.note.texture},
-        time:G.uniforms.time
+        time:G.uniforms.time,
+        jelly:{type:"v3",value:headMesh.position}
       },
       vertexShader: shaders.vs.poly,
       fragmentShader: shaders.fs.poly,
@@ -39,7 +40,8 @@ function Poly( id , note ){
       new THREE.ShaderMaterial({
       uniforms:{
         t_audio:{type:"t",value:this.note.texture},
-        time:G.uniforms.time
+        time:G.uniforms.time,
+        jelly:{type:"v3",value:headMesh.position}
       },
       vertexShader: shaders.vs.polyOutline,
       fragmentShader: shaders.fs.polyOutline,
@@ -141,7 +143,8 @@ Poly.prototype = {
     this.mesh.scale.z = 2;
     this.activate();
 
-    bait.position.copy( this.mesh.position );
+    Jelly.updateBaitPos( this.mesh.position );
+    Jelly.searching = this;
 
   }else{
        this.mesh.scale.x = 1;

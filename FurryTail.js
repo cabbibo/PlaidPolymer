@@ -146,10 +146,11 @@
       uniforms: this.lineUniforms,
       vertexShader: shaders.vs.furryTail,
       fragmentShader: shaders.fs.furryTail,   
-      linewidth: 2
+      //linewidth: 2
+      side:THREE.DoubleSide
     });
 
-    this.line = new THREE.Line( this.lineGeo , lineMat );
+    this.line = new THREE.Mesh( this.lineGeo , lineMat );
     this.line.type = THREE.LinePieces;
 
     this.line.frustumCulled = false;
@@ -321,73 +322,109 @@
 
     var lineGeo = new THREE.BufferGeometry();
 
-    var posBuffer = new THREE.BufferAttribute(  new Float32Array( 32 * 32 * 2 * 3 ) , 3 );
-    var colBuffer = new THREE.BufferAttribute(  new Float32Array( 32 * 32 * 2 * 3 ) , 3 );
+    //var posBuffer = new THREE.BufferAttribute(  new Float32Array( 32 * 32  * 4 ) , 3 );
+
+    var positions = [];
+    var colors = [];
+    var indices = [];
      
-    lineGeo.addAttribute( 'position', posBuffer );
-    lineGeo.addAttribute( 'color'   , colBuffer );
+    //lineGeo.addAttribute( 'position', posBuffer );
     
-    var positions = lineGeo.getAttribute( 'position' ).array;
-    var colors = lineGeo.getAttribute( 'color' ).array;
-    var size = 1 / this.params.size;
+    //var positions = lineGeo.getAttribute( 'position' ).array;
+
+    var size = 1 / 32;
     var hSize = size / 2;
 
-    for( var i = 0; i < this.params.size; i ++ ){
+    for( var i = 0; i < 32; i ++ ){
 
       // Spine 
-      var index = i * 3;
+      //var index = i * 3;
 
-      var p1 = index * 2;
-      var p2 = index * 2 + 3;
+      var p1 = i *  4 * 3;
 
-      positions[ p1 ] = 0 * size ;
+      positions[ p1 + 0] = 0 * size ;
       positions[ p1 + 1 ] = i * size ;
-      positions[ p1 + 2 ] = 1;
+      positions[ p1 + 2 ] = 0;
 
-      positions[ p2 ] = 0 * size ;
-      positions[ p2 + 1 ] = (i + 1) * size;
-      positions[ p2 + 2 ] = 1;
+      positions[ p1 + 3 ] = 0 * size ;
+      positions[ p1 + 4 ] = i * size ;
+      positions[ p1 + 5 ] = 1;
 
-      colors[ p1 ]      = i;
-      colors[ p1 + 1 ]  = 0;
-      colors[ p1 + 2 ]  = 0;
+      positions[ p1 + 6 ] = 0 * size ;
+      positions[ p1 + 7 ] = (i + 1) * size;
+      positions[ p1 + 8 ] = 0;
 
-      colors[ p2 ]      = i + 1;
-      colors[ p2 + 1 ]  = 0;
-      colors[ p2 + 2 ]  = 0;
+      positions[ p1 + 9  ] = 0 * size ;
+      positions[ p1 + 10 ] = (i + 1) * size;
+      positions[ p1 + 11 ] = 1;
+
+
+
+      // Stores the other part of the line
+      colors[ p1 + 0] = 0 * size ;
+      colors[ p1 + 1 ] = (i+1) * size ;
+      colors[ p1 + 2 ] = 0;
+
+      colors[ p1 + 3 ] = 0 * size ;
+      colors[ p1 + 4 ] = (i+1) * size ;
+      colors[ p1 + 5 ] = 0;
+
+      colors[ p1 + 6 ] = 0 * size ;
+      colors[ p1 + 7 ] = i * size;
+      colors[ p1 + 8 ] = 1;
+
+      colors[ p1 + 9  ] = 0 * size ;
+      colors[ p1 + 10 ] = i * size;
+      colors[ p1 + 11 ] = 1;
+
 
       // Sub
       for( var j = 0; j < 4; j++ ){
 
         // Start these positions after all of our indices
-        var startingIndex = this.params.size * 3;
+        var startingIndex = 32 * 4 * 3;
 
-        var columnStartingIndex = startingIndex + ( this.params.size * 3 * j);
+        var columnStartingIndex = startingIndex + ( 32 * 4 * 3 * j);
 
-        var index = (i * 3) + columnStartingIndex;
+        var index = (i * 4 * 3) + columnStartingIndex;
 
-        var p1 = index * 2;
-        var p2 = index * 2 + 3;
+        var p1 = index;
         
 
-        positions[ p1 ] = 0 * size;
+        positions[ p1 + 0] = 0 * size ;
         positions[ p1 + 1 ] = i * size ;
-        positions[ p1 + 2 ] = 1;
+        positions[ p1 + 2 ] = 0;
 
-        positions[ p2 ]     = ( j + 1) * size;
-        positions[ p2 + 1 ] = i  * size;
-        positions[ p2 + 2 ] = .1;
+        positions[ p1 + 3 ] = 0 * size ;
+        positions[ p1 + 4 ] = i * size ;
+        positions[ p1 + 5 ] = 1;
 
-        colors[ p1 ]      = (i +1) / size;
-        colors[ p1 + 1 ]  = 0;
-        colors[ p1 + 2 ]  = 0;
+        positions[ p1 + 6 ] = (j+1) * size ;
+        positions[ p1 + 7 ] = i  * size;
+        positions[ p1 + 8 ] = 0;
 
-        colors[ p2 ]      = (i +1) / size;
-        colors[ p2 + 1 ]  = 1;
-        colors[ p2 + 2 ]  = 0;
+        positions[ p1 + 9  ] = (j+1) * size ;
+        positions[ p1 + 10 ] = i * size;
+        positions[ p1 + 11 ] = 1;
 
-        //positions[ i + 3 ] = Math.random() * 20;
-    
+
+          // Stores the other part of the line
+        colors[ p1 + 0]  = (j+1) * size ;
+        colors[ p1 + 1 ] = i * size ;
+        colors[ p1 + 2 ] = 0;
+
+        colors[ p1 + 3 ] = (j+1) * size;
+        colors[ p1 + 4 ] = i * size ;
+        colors[ p1 + 5 ] = 0;
+
+        colors[ p1 + 6 ] = 0 * size ;
+        colors[ p1 + 7 ] = i * size;
+        colors[ p1 + 8 ] = 1;
+
+        colors[ p1 + 9  ] = 0 * size ;
+        colors[ p1 + 10 ] = i * size;
+        colors[ p1 + 11 ] = 1;
+
       }
 
 
@@ -395,15 +432,16 @@
       for( var j = 0; j < 4; j ++ ){
         for( var k = 0; k < 4; k++ ){
 
-          var startingIndex = 5 * this.params.size * 3;
-          var groupStartingIndex = startingIndex + ( this.params.size * 3 * 4 * (j) );
-          var columnStartingIndex = groupStartingIndex + ( this.params.size * 3 * (k) );
+          var startingIndex = 5 * 32 * (4*3);
+          var groupStartingIndex = startingIndex + ( 32 * (4*3) * 4 * (j) );
+          var columnStartingIndex = groupStartingIndex + ( 32 * (4 *3) * (k) );
 
-          var index = ( i *3 ) + columnStartingIndex;
+          var index = ( i *4*3 ) + columnStartingIndex;
 
-          var p1 = index * 2;
-          var p2 = index * 2 + 3;
+          var p1 = index;
 
+
+/*
           positions[ p1 ] = ( j + 1 ) * size;
           positions[ p1 + 1 ] = i * size;
           positions[ p1 + 2 ] = .1;
@@ -411,15 +449,43 @@
           positions[ p2 ]     = ( (j * 4) + 5 + k) * size;
           positions[ p2 + 1 ] = i * size;
           positions[ p2 + 2 ] = .1;
+*/
 
 
-          colors[ p1 ]      = i;
-          colors[ p1 + 1 ]  = 1;
-          colors[ p1 + 2 ]  = 0;
 
-          colors[ p2 ]      = i;
-          colors[ p2 + 1 ]  = 2;
-          colors[ p2 + 2 ]  = 0;
+          positions[ p1 + 0] = ( j + 1 ) * size ;
+          positions[ p1 + 1 ] = i * size ;
+          positions[ p1 + 2 ] = 0;
+
+          positions[ p1 + 3 ] = ( j + 1 ) * size ;
+          positions[ p1 + 4 ] = i * size ;
+          positions[ p1 + 5 ] = 1;
+
+          positions[ p1 + 6 ] = ( (j * 4) + 5 + k) * size;;
+          positions[ p1 + 7 ] = i  * size;
+          positions[ p1 + 8 ] = 0;
+
+          positions[ p1 + 9  ] = ( (j * 4) + 5 + k) * size;;
+          positions[ p1 + 10 ] = i * size;
+          positions[ p1 + 11 ] = 1;
+
+
+            // Stores the other part of the line
+          colors[ p1 + 0]  = ( (j * 4) + 5 + k) * size;
+          colors[ p1 + 1 ] = i * size ;
+          colors[ p1 + 2 ] = 0;
+
+          colors[ p1 + 3 ] = ( (j * 4) + 5 + k) * size;
+          colors[ p1 + 4 ] = i * size ;
+          colors[ p1 + 5 ] = 0;
+
+          colors[ p1 + 6 ] = ( j + 1 ) * size ;
+          colors[ p1 + 7 ] = i * size;
+          colors[ p1 + 8 ] = 1;
+
+          colors[ p1 + 9  ] = ( j + 1 ) * size ;
+          colors[ p1 + 10 ] = i * size;
+          colors[ p1 + 11 ] = 1;
 
         }
       }
@@ -428,14 +494,13 @@
       for( var j = 0; j < 11; j++ ){
 
 
-        var startingIndex = 21 * this.params.size * 3;
-        var columnStartingIndex = startingIndex + ( this.params.size * 3 * j );
-        var index = columnStartingIndex + ( i * 3 );
+        var startingIndex = 21 * 32 * (4 * 3)
+        var columnStartingIndex = startingIndex + ( 32 * (4 * 3) * j );
+        var index = columnStartingIndex + ( i * (4 * 3) );
 
-        var p1 = index * 2;
-        var p2 = index * 2 + 3;
+        var p1 = index;
 
-        positions[ p1 ] = 0 * size;
+        /*positions[ p1 ] = 0 * size;
         positions[ p1 + 1 ] = i * size;
         positions[ p1 + 2 ] = .1;
 
@@ -449,14 +514,64 @@
 
         colors[ p2 ]      =  i;
         colors[ p2 + 1 ]  =  3;
-        colors[ p2 + 2 ]  =  0;
+        colors[ p2 + 2 ]  =  0;*/
 
 
+
+
+          positions[ p1 + 0] = 0 * size ;
+          positions[ p1 + 1 ] = i * size ;
+          positions[ p1 + 2 ] = 0;
+
+          positions[ p1 + 3 ] = 0 * size ;
+          positions[ p1 + 4 ] = i * size ;
+          positions[ p1 + 5 ] = 1;
+
+          positions[ p1 + 6 ] = (21 + j) * size;
+          positions[ p1 + 7 ] = i  * size;
+          positions[ p1 + 8 ] = 0;
+
+          positions[ p1 + 9  ] = (21 + j) * size;
+          positions[ p1 + 10 ] = i * size;
+          positions[ p1 + 11 ] = 1;
+
+
+            // Stores the other part of the line
+          colors[ p1 + 0]  = (21 + j) * size;
+          colors[ p1 + 1 ] = i * size ;
+          colors[ p1 + 2 ] = 0;
+
+          colors[ p1 + 3 ] = (21 + j) * size;
+          colors[ p1 + 4 ] = i * size ;
+          colors[ p1 + 5 ] = 0;
+
+          colors[ p1 + 6 ] = 0 * size ;
+          colors[ p1 + 7 ] = i * size;
+          colors[ p1 + 8 ] = 1;
+
+          colors[ p1 + 9  ] = 0 * size ;
+          colors[ p1 + 10 ] = i * size;
+          colors[ p1 + 11 ] = 1;
 
       }
 
     }
 
+    for( var i = 0; i < 32 * 32; i++ ){
+
+      indices.push( i * 4  + 0 );
+      indices.push( i * 4  + 3 );
+      indices.push( i * 4  + 1 );
+      indices.push( i * 4  + 0 );
+      indices.push( i * 4  + 2 );
+      indices.push( i * 4  + 3 );
+
+    }
+
+
+    lineGeo.setIndex(indices);
+    lineGeo.addAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    lineGeo.addAttribute('color',new THREE.Float32BufferAttribute(colors,3));
 
     return lineGeo;
 

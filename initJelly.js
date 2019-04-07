@@ -34,7 +34,7 @@ function initJelly(){
     new THREE.MeshBasicMaterial({side:THREE.DoubleSide})
   );
 
-  head = new THREE.Mesh(
+  headMesh = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 30.1 , 1 ),
     new THREE.MeshNormalMaterial({side:THREE.DoubleSide})
   );
@@ -64,17 +64,17 @@ function initJelly(){
 
  Jelly.tails = [];
  Jelly.bait = bait;
- //Jelly.head = head;
+ Jelly.headMesh = headMesh;
 
 
     bait.velocity = new THREE.Vector3();
-    head.velocity = new THREE.Vector3();
+    headMesh.velocity = new THREE.Vector3();
 
     bait.oldPosition = new THREE.Vector3();
-    head.oldPosition = new THREE.Vector3();
+    headMesh.oldPosition = new THREE.Vector3();
 
  scene.add(bait);
- //scene.add(head);
+ scene.add(headMesh);
 
 
 
@@ -106,7 +106,7 @@ function initJelly(){
     addGui();
 
 
-    Jelly.leaderVel = { type:"v3", value: head.velocity };
+    Jelly.leaderVel = { type:"v3", value: headMesh.velocity };
 
     var allUniforms = {
 
@@ -155,25 +155,25 @@ function initJelly(){
 
     Jelly.simulationUniforms = allUniforms;
 
-  Jelly.head = new FurryHead( Jelly , head ,{
-  })
-
-  Jelly.mainTail = new FurryTail( Jelly , head , {
-    simulationUniforms: mainUniforms,
-    sim:shaders.ss.mainTail,
-    size: 64,
-    particleSize:40
+  Jelly.head = new FurryHead( Jelly , headMesh ,{
   });
 
-  for(var i = 0; i < 6; i++ ){
-    var tail = new FurryTail( Jelly , head ,{
+  Jelly.mainTail = new FurryTail( Jelly , headMesh , {
+    simulationUniforms: mainUniforms,
+    sim:shaders.ss.mainTail,
+    size: 32,
+    particleSize:10
+  });
+
+
+  for(var i = 0; i < 0; i++ ){
+    var tail = new FurryTail( Jelly , headMesh ,{
       simulationUniforms: allUniforms
     });
     Jelly.tails.push( tail );
   }
 
-  for(var i = 0; i < 6; i++ ){
-      var tail = new FurryTail( Jelly , head );
+  for(var i = 0; i < 0; i++ ){
       
       Jelly.tails[i].physicsRenderer.simulation.uniforms["t_posMain"] = { type:"t", value:null}
       Jelly.tails[i].physicsRenderer.simulation.uniforms["tailID"] = { type:"f", value:i}
@@ -195,7 +195,7 @@ function initJelly(){
     this.add( this.head.mesh );
     //this.head.mesh.scale.multiplyScalar( .001 );
 
-    this.add( this.tails[0].line );
+/*this.add( this.tails[0].line );
     this.add( this.tails[1].line );
     this.add( this.tails[2].line );
     this.add( this.tails[3].line );
@@ -207,9 +207,9 @@ function initJelly(){
     this.add( this.tails[2].physicsParticles );
     this.add( this.tails[3].physicsParticles );
     this.add( this.tails[4].physicsParticles );
-    this.add( this.tails[5].physicsParticles );
+    this.add( this.tails[5].physicsParticles );*/
 
-   // this.add( this.mainTail.line );
+    this.add( this.mainTail.line );
     this.add( this.mainTail.physicsParticles );
 
     
@@ -239,7 +239,7 @@ function initJelly(){
   
     for( var i = 0; i < loopList.length; i++ ){
       if( 
-        head.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 30 && 
+        headMesh.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 30 && 
         POLYS[loopList[i]].active == true
       ){
         POLYS[loopList[i]].select();
@@ -247,7 +247,7 @@ function initJelly(){
     }
 
       //console.log( head.position.clone().sub( bait.position ).length() );
-    if( head.position.clone().sub( bait.position ).length() < 30 ){
+    if( headMesh.position.clone().sub( bait.position ).length() < 30 ){
 
 
       if( bait.searching != null ){
@@ -268,16 +268,24 @@ function initJelly(){
         this.updateBaitPos(bait.searching.mesh.position);
       }else{
         bait.searching = null;
-        this.updateBaitPos(POLYS[loopList[Math.floor(Math.random() * loopList.length)]].mesh.position);
+
+        var a = Math.random() * 2 * 3.14;
+        v2.x = window.innerWidth * Math.sin( a );
+        v2.y = window.innerHeight * Math.cos( a );
+        v2.z = 300;
+        this.updateBaitPos(v2);
+        //this.updateBaitPos(v2.copy(camera.position).add( camera.position ));
+
+       // this.updateBaitPos(POLYS[loopList[Math.floor(Math.random() * loopList.length)]].mesh.position);
       }
 
     }
 
 
   
-    head.oldPosition.copy( head.position );
-    head.position.copy( (bait.position.clone().sub(head.position)).normalize().multiplyScalar( 1.5 + 1.3*Math.sin(G.uniforms.time.value * 4)).add( head.position));
-    head.velocity.copy( head.position.clone().sub(head.oldPosition));
+    headMesh.oldPosition.copy( headMesh.position );
+    headMesh.position.copy( (bait.position.clone().sub(headMesh.position)).normalize().multiplyScalar( 1.5 + 1.3*Math.sin(G.uniforms.time.value * 4)).add( headMesh.position));
+    headMesh.velocity.copy( headMesh.position.clone().sub(headMesh.oldPosition));
 
    // console.log( bait.velocity);
     this.head.update();
