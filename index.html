@@ -27,10 +27,12 @@
 <script src = "ParticleUtils.js"      ></script>
 <script src = "LoadedAudio.js"        ></script>
 <script src = "dat.gui.min.js"        ></script>
+<script src = "ObjectControls.js"     ></script>
 
 
 <script src = "initThree.js"          ></script>
-<script src = "initJelly.js"      ></script>
+<script src = "initJelly.js"          ></script>
+<script src = "initPoly.js"           ></script>
 
 <script src = "FurryGroup.js"         ></script>
 <script src = "FurryTail.js"          ></script>
@@ -42,6 +44,11 @@
   function c(val){console.log(val);}
   var container , camera, scene, renderer , stats;
   var clock;
+
+
+// tmp vecs to reuse
+v1 = new THREE.Vector3();
+v2 = new THREE.Vector3();
 
   var G = {}
   G.uniforms = {
@@ -57,9 +64,11 @@
   var loader = new Loader({ numberToLoad: 0 });
 
   var LOOPS = {}
+  var POLYS = {}
 
   //loader.beginLoading();
   var shaders = new ShaderLoader('shaders');
+ 
   shaders.beginLoad = function(){
     loader.beginLoading();
   }
@@ -96,6 +105,15 @@
   shaders.load( 'vs-furryParticles'   , 'furryParticles' , 'vertex'  );
 
 
+
+  shaders.load( 'vs-poly'   , 'poly' , 'vertex'  );
+  shaders.load( 'fs-poly'   , 'poly' , 'fragment'  );
+
+  shaders.load( 'vs-polyOutline'   , 'polyOutline' , 'vertex'  );
+  shaders.load( 'fs-polyOutline'   , 'polyOutline' , 'fragment'  );
+ 
+
+
   var audioController = new AudioController();
 
 //  audioController.mute.gain.value = 0;
@@ -103,23 +121,51 @@
   G.uniforms.t_audio.value = audioController.texture;
 
 
-  loader.beginLoading();
-    var newName = 'andaBit.wav';
+
+   
+  var loopList = [
+    "BassKick",
+    "BassMod",
+    "BellA",
+    "BellB",
+    "BellBright",
+    "BellC",
+    "Clap",
+    "Hats",
+    "Hiup",
+    "IMP",
+    "Kick",
+    "Logrit",
+    "Lopan",
+    "ModA",
+    "ModB",
+    "RNL",
+    "Roll",
+    "Snare",
+    "Upmid",
+    "Voc"
+  ];
+
+  for( var i = 0; i < loopList.length; i++ ){
+    loader.beginLoading();
+    var newName = "Maru" + loopList[i] + "Loop.mp3";
     var note = new LoadedAudio( audioController , newName , {
       looping:true 
     });
 
-    LOOPS['death'] = note;
- //   audioController.notes.push( note );
+    LOOPS[loopList[i]] = note;
+  //   audioController.notes.push( note );
      
     note.onLoad = function(){
       this.endLoading();
     }.bind( loader );
 
+  }
+
 
   var looper          = new Looper( audioController , G.uniforms.time , {
 
-    beatsPerMinute: 122,
+    beatsPerMinute: 120,
     beatsPerMeasure: 4,
     measuresPerLoop: 8
     
@@ -134,6 +180,7 @@
     bait = new THREE.Object3D();
 
 
+
  // initAudio();
 
   function init(){
@@ -142,6 +189,7 @@
 
     initThree();
     initJelly();
+    initPoly();
 
 
     camera.position.x = 0;
@@ -163,7 +211,12 @@
     TWEEN.update();
 
     audioController.update();
+    objectControls.update();
     //controls.update();
+
+    for(var i = 0; i < loopList.length; i++ ){
+      POLYS[loopList[i]].update();
+    }
      
     var delta = clock.getDelta();
 
@@ -176,6 +229,7 @@
     
     renderer.render( scene , camera );
     requestAnimationFrame( animate );
+    
 
 
   }
@@ -187,9 +241,12 @@
     animate();
 
 
-    LOOPS['death'].gain.gain.value = 1;
-    LOOPS['death'].play();
-    LOOPS['death'].gain.gain.value = 1;
+
+
+    for( var i = 0; i < loopList.length;i++){
+      POLYS[loopList[i]].play();
+     // POLYS[loopList[i]].activate();
+    }
    
   
   });

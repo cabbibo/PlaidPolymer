@@ -6,7 +6,7 @@
 
     // TODO: why 2 * 4 instead of 4 ?
     // fudge factor is to make sure texture reachs from 0 -> 1 in vUv coords
-    var pixels = fbc / 8.2; 
+    var pixels = fbc / 8; 
 
     //creates a canvas element
     var canvas              = document.createElement('canvas');
@@ -50,6 +50,7 @@
 
     if( this.analyzer){
 
+
       var imageData = this.c.createImageData( this.width , this.height );
 
       //transfers audio data to rgb values
@@ -69,7 +70,7 @@
       this.c.putImageData( imageData , 0 , 0 );
 
       //updates the texture
-      this._needsUpdate =  true;
+      this.needsUpdate =  true;
 
     }
 
@@ -81,6 +82,7 @@
 
   setPixelData = function ( imageData, x, y, r, g, b, a) {
 
+    //console.log( r + " :  " + g + " : " + b + " : " + a);
       index = ( x + y * imageData.width ) * 4;
       imageData.data[index+0] = r;
       imageData.data[index+1] = g;

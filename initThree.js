@@ -17,6 +17,17 @@ function initThree(){
 
   camera.lookAt( new THREE.Vector3() );
 
+  objectControls = new ObjectControls(camera);
+
+
+  var m = new THREE.Mesh(
+    new THREE.IcosahedronGeometry( 300 , 1),
+    new THREE.MeshBasicMaterial({map:G.uniforms.t_audio.value})
+  );
+
+
+  //scene.add( m);
+
   //controls = new THREE.TrackballControls(camera);
 
   clock = new THREE.Clock();
@@ -37,10 +48,13 @@ function initThree(){
     document.body.appendChild( stats.domElement );
 
     // Setting up our Renderer
-    renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer = new THREE.WebGLRenderer({ autoClear:false });
 
+    renderer.autoClear = false;
+    renderer.gammaOutput = true;
+    renderer.gammaInput = true;
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setClearColor( 0x000000 , 0 );
+    //renderer.setClearColor( 0x000000 , 0 );
     container.appendChild( renderer.domElement );
 
     // Making sure our renderer is always the right size
@@ -57,7 +71,7 @@ function initThree(){
     });
     starMap = new THREE.Mesh( geo , mat );
 
-    scene.add( starMap );
+   // scene.add( starMap );
     starMap.position = camera.position;
 
 

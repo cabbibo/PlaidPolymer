@@ -29,12 +29,12 @@ function initJelly(){
 
 
 
-  var bait = new THREE.Mesh(
+  bait = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 10.1 , 1 ),
     new THREE.MeshBasicMaterial({side:THREE.DoubleSide})
   );
 
-  var head = new THREE.Mesh(
+  head = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 30.1 , 1 ),
     new THREE.MeshNormalMaterial({side:THREE.DoubleSide})
   );
@@ -64,7 +64,7 @@ function initJelly(){
 
  Jelly.tails = [];
  Jelly.bait = bait;
- Jelly.head = head;
+ //Jelly.head = head;
 
 
     bait.velocity = new THREE.Vector3();
@@ -220,7 +220,12 @@ function initJelly(){
   }
 
   Jelly.updateBaitPos = function(pos){
-    bait.position.copy(pos);
+
+    v1.copy(pos).sub(camera.position);
+    v1.normalize();
+    v1.multiplyScalar(-100);
+    v1.add(pos);
+    bait.position.copy(v1);
   }
 
   
@@ -231,12 +236,43 @@ function initJelly(){
 
     var p = camera.position.clone();
 
-    console.log( head.position.clone().sub( bait.position ).length() );
-    if( head.position.clone().sub( bait.position ).length() < 100 ){
-
-      var p = new THREE.Vector3( (Math.random() -.5) * 1000 , (Math.random() -.5) * 1000 , (Math.random() -.5) * 100);
-      this.updateBaitPos( p );
+  
+    for( var i = 0; i < loopList.length; i++ ){
+      if( 
+        head.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 30 && 
+        POLYS[loopList[i]].active == true
+      ){
+        POLYS[loopList[i]].select();
+      }
     }
+
+      //console.log( head.position.clone().sub( bait.position ).length() );
+    if( head.position.clone().sub( bait.position ).length() < 30 ){
+
+
+      if( bait.searching != null ){
+        bait.searching.select();
+      }
+
+      var activated = [];
+      
+      for( var i = 0; i < loopList.length; i++ ){
+        if( POLYS[loopList[i]].active == true ){
+          activated.push( POLYS[loopList[i]] );
+        }
+      }
+
+      if( activated.length > 0 ){
+
+        bait.searching = activated[Math.floor(Math.random() * activated.length)]
+        this.updateBaitPos(bait.searching.mesh.position);
+      }else{
+        bait.searching = null;
+        this.updateBaitPos(POLYS[loopList[Math.floor(Math.random() * loopList.length)]].mesh.position);
+      }
+
+    }
+
 
   
     head.oldPosition.copy( head.position );
