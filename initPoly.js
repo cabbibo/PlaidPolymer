@@ -105,6 +105,28 @@ Poly.prototype = {
     this.active = true;
     this.mesh.material.uniforms.active.value = 1;
     this.note.gain.gain.value = 1;
+
+    var canDL = true;
+    for( var i = 0; i < loopList.length; i++ ){
+      if( POLYS[loopList[i]].active == false ){ canDL = false; }
+    }
+
+
+    if( canDL ){
+      var url="MaruLoops.zip";
+      //window.open(url);
+
+
+var zip_file_path = url; //put inside "" your path with file.zip
+var zip_file_name = "Maru Loops" //put inside "" file name or something
+var a = document.createElement("a");
+document.body.appendChild(a);
+a.style = "display: none";
+a.href = zip_file_path;
+a.download = zip_file_name;
+a.click();
+document.body.removeChild(a);
+    }
   },
 
   deactivate: function(){
