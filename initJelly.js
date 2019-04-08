@@ -150,6 +150,7 @@ function initJelly(){
       dT                    : G.uniforms.dT,
       audioPower            : Jelly.audioPower,
       audioAmount           : Jelly.audioAmount,
+      leaderVel             : Jelly.leaderVel,
 
     }
 
@@ -162,7 +163,7 @@ function initJelly(){
     simulationUniforms: mainUniforms,
     sim:shaders.ss.mainTail,
     size: 32,
-    particleSize:10
+    particleSize:40
   });
 
 

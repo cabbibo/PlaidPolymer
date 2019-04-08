@@ -6,6 +6,8 @@ varying vec3 vNorm;
 
 varying vec3 vView;
 varying vec3 vLightDir;
+varying vec2 vUv;
+varying vec2 vID;
 
 void main(){
 
@@ -19,9 +21,13 @@ void main(){
   vec3 refl = reflect( vLightDir , nNormal );
   float facingRatio = abs( dot(  nNormal, refl) );
 
-  vec4 aColor = texture2D( t_audio , vec2( iNViewDot * facingRatio , 0.0));
+
+
+  vec4 aColor = texture2D( t_audio , vec2( vUv.y * .2 + vID.y * .5, 0.0));
 
   vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 ;
-  gl_FragColor = vec4( vColor  + aC, 1.0 );
+
+  if( abs(vUv.x - .5) > .5 - length( aC ) ){ discard;}
+  gl_FragColor = vec4( vColor * aColor.xyz , 1.0 );
 
 }

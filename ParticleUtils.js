@@ -74,6 +74,79 @@ var ParticleUtils = {
 
     return geo;
     
+  },
+
+
+
+  createParticleLookupGeometry: function( size ){    
+
+
+
+    var geo = new THREE.BufferGeometry();
+
+    //var posBuffer = new THREE.BufferAttribute(  new Float32Array( 32 * 32  * 4 ) , 3 );
+
+    var positions = [];
+    var uvs = [];
+    var indices = [];
+        
+ 
+    for ( var i = 0;  i < size * size; i++  ) {
+
+      positions[ i * 4 * 3 + 0 ] = ( i % size ) / size;
+      positions[ i * 4 * 3 + 1 ] = Math.floor( i / size ) / size;
+      positions[ i * 4 * 3 + 2 ] = 0;
+
+      positions[ i * 4 * 3 + 3 ] = ( i % size ) / size;
+      positions[ i * 4 * 3 + 4 ] = Math.floor( i / size ) / size;
+      positions[ i * 4 * 3 + 5 ] = 0;
+
+      positions[ i * 4 * 3 + 6 ] = ( i % size ) / size;
+      positions[ i * 4 * 3 + 7 ] = Math.floor( i / size ) / size;
+      positions[ i * 4 * 3 + 8 ] = 0;
+
+      positions[ i * 4 * 3 + 9 ] = ( i % size ) / size;
+      positions[ i * 4 * 3 + 10 ] = Math.floor( i / size ) / size;
+      positions[ i * 4 * 3 + 11 ] = 0;
+
+
+      uvs[ i * 4 * 2 + 0 ] = 0;
+      uvs[ i * 4 * 2 + 1 ] = 0;
+
+      uvs[ i * 4 * 2 + 2 ] = 1;
+      uvs[ i * 4 * 2 + 3 ] = 0;
+
+      uvs[ i * 4 * 2 + 4 ] = 0;
+      uvs[ i * 4 * 2 + 5 ] = 1;
+
+      uvs[ i * 4 * 2 + 6 ] = 1;
+      uvs[ i * 4 * 2 + 7 ] = 1;
+
+
+      //uvs[ j + 2 ] = Math.sin( (i / size) * Math.PI );
+
+    }
+
+
+    for( var i = 0; i < size*size; i++ ){
+
+      indices.push( i * 4  + 0 );
+      indices.push( i * 4  + 3 );
+      indices.push( i * 4  + 1 );
+      indices.push( i * 4  + 0 );
+      indices.push( i * 4  + 2 );
+      indices.push( i * 4  + 3 );
+
+    }
+
+
+    geo.setIndex(indices);
+    geo.addAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    geo.addAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+
+
+    return geo;
+    
   }
 
 }

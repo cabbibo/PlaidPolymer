@@ -19,15 +19,11 @@ void main(){
 
   // Main Index
   vec2 mI = vec2( mIx , mIy );
-  vec4 s = texture2D( t_sprite , vec2( gl_PointCoord.x , 1.0 - gl_PointCoord.y) );
-  vec4 a = texture2D( t_audio , vec2( vUv.y , 0.0 ));
+  //vec4 s = texture2D( t_sprite , vec2( gl_PointCoord.x , 1.0 - gl_PointCoord.y) );
+  vec4 a = texture2D( t_audio , vec2(length(vUv-.5),0.));
 
-  if( s.a < .5 ){
 
-    //discard;
-
-  }
   //float c = mod(( vUv.y -hSize ) / size , 2. );
 
-  gl_FragColor = vec4( vColor * s.xyz, s.a ); 
+  gl_FragColor = vec4( 1.,1.,1.,1. ); 
 }

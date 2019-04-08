@@ -114,9 +114,9 @@ Poly.prototype = {
   hoverOver: function(){
     
     if( this.active == false ){
-      this.mesh.scale.x = 1.3;
-      this.mesh.scale.y = 1.3;
-      this.mesh.scale.z = 1.3;
+      this.mesh.scale.x = 1.1;
+      this.mesh.scale.y = 1.1;
+      this.mesh.scale.z = 1.1;
     }
 
     console.log( this);
@@ -138,9 +138,9 @@ Poly.prototype = {
   select:function(){
 
   if( this.active == false ){
-    this.mesh.scale.x = 2;
-    this.mesh.scale.y = 2;
-    this.mesh.scale.z = 2;
+    this.mesh.scale.x = 1.5;
+    this.mesh.scale.y = 1.5;
+    this.mesh.scale.z = 1.5;
     this.activate();
 
     Jelly.updateBaitPos( this.mesh.position );

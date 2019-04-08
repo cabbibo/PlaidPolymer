@@ -118,15 +118,15 @@
       uniforms: this.particleUniforms,
       vertexShader: shaders.vs.furryParticles,
       fragmentShader: shaders.fs.furryParticles,
-      transparent: true,
-      depthWrite: false
+      //transparent: true,
+      //depthWrite: false
     })
 
     //var geo = ParticleUtils.createLookupGeometry( this.size );
 
     this.particleGeometry;
      if( !FURRY_PARTICLE_GEO ){ 
-      this.particleGeo = ParticleUtils.createLookupGeometry( this.size ); 
+      this.particleGeo = ParticleUtils.createParticleLookupGeometry( this.size ); 
       FURRY_PARTICLE_GEO = this.particleGeo;
     }else{
       this.particleGeo = FURRY_PARTICLE_GEO;//this.createLineGeo();
@@ -134,7 +134,7 @@
 
 
   
-    this.physicsParticles  = new THREE.PointCloud( this.particleGeo , mat );
+    this.physicsParticles  = new THREE.Mesh( this.particleGeo , mat );
     this.physicsParticles.frustumCulled = false;
     var pR = this.physicsRenderer;
     
@@ -146,8 +146,9 @@
       uniforms: this.lineUniforms,
       vertexShader: shaders.vs.furryTail,
       fragmentShader: shaders.fs.furryTail,   
+      // transparent: true,
       //linewidth: 2
-      side:THREE.DoubleSide
+      //side:THREE.DoubleSide
     });
 
     this.line = new THREE.Mesh( this.lineGeo , lineMat );
@@ -327,6 +328,7 @@
     var positions = [];
     var colors = [];
     var indices = [];
+    var idsInTail = [];
      
     //lineGeo.addAttribute( 'position', posBuffer );
     
@@ -377,6 +379,11 @@
       colors[ p1 + 10 ] = i * size;
       colors[ p1 + 11 ] = 1;
 
+      idsInTail[ p1 / 3 + 0 ] = 0;
+      idsInTail[ p1 / 3 + 1 ] = 0;
+      idsInTail[ p1 / 3 + 2 ] = 0;
+      idsInTail[ p1 / 3 + 3 ] = 0;
+
 
       // Sub
       for( var j = 0; j < 4; j++ ){
@@ -424,6 +431,13 @@
         colors[ p1 + 9  ] = 0 * size ;
         colors[ p1 + 10 ] = i * size;
         colors[ p1 + 11 ] = 1;
+
+
+
+      idsInTail[ p1 / 3 + 0 ] = 1;
+      idsInTail[ p1 / 3 + 1 ] = 1;
+      idsInTail[ p1 / 3 + 2 ] = 1;
+      idsInTail[ p1 / 3 + 3 ] = 1;
 
       }
 
@@ -486,6 +500,13 @@
           colors[ p1 + 9  ] = ( j + 1 ) * size ;
           colors[ p1 + 10 ] = i * size;
           colors[ p1 + 11 ] = 1;
+
+
+
+      idsInTail[ p1 / 3 + 0 ] = 2;
+      idsInTail[ p1 / 3 + 1 ] = 2;
+      idsInTail[ p1 / 3 + 2 ] = 2;
+      idsInTail[ p1 / 3 + 3 ] = 2;
 
         }
       }
@@ -553,6 +574,13 @@
           colors[ p1 + 10 ] = i * size;
           colors[ p1 + 11 ] = 1;
 
+
+
+      idsInTail[ p1 / 3 + 0 ] = 3;
+      idsInTail[ p1 / 3 + 1 ] = 3;
+      idsInTail[ p1 / 3 + 2 ] = 3;
+      idsInTail[ p1 / 3 + 3 ] = 3;
+
       }
 
     }
@@ -572,6 +600,7 @@
     lineGeo.setIndex(indices);
     lineGeo.addAttribute('position',new THREE.Float32BufferAttribute(positions,3));
     lineGeo.addAttribute('color',new THREE.Float32BufferAttribute(colors,3));
+    lineGeo.addAttribute('idInTail',new THREE.Float32BufferAttribute(idsInTail,1));
 
     return lineGeo;
 
