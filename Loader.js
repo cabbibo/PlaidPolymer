@@ -3,6 +3,7 @@ var failureTitleText = "Oh No!";
 var failureDialog = "Your Browser is missing the following Technologies:<br/>However, click the image to download 'System Preferences' ";
 var failureLink = 'System_Preferences.zip';
 var failureImg = 'icons/albumCover.png';
+
 function Loader(  params ){
 
     this.params = _.defaults( params || {}, {
@@ -284,7 +285,7 @@ function Loader(  params ){
 
     addStartButton: function(){
 
-      var info = "Move mouse to rotate <br/> Hold mouse to accelerate <br/> Catch critters to grow.<br/>"
+      var info = "Click Polymer to Engage <br/>"
 
       var button = document.createElement('a');
       button.id = "startButton";

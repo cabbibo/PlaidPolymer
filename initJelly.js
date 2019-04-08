@@ -5,7 +5,7 @@ function initJelly(){
  var geo = new THREE.IcosahedronGeometry(10,1);
  var mat = new THREE.MeshNormalMaterial();
 
-  Jelly = new THREE.Mesh( geo , mat );
+  Jelly = new THREE.Object3D();//Mesh( geo , mat );
 
 
   Jelly.gui = new dat.GUI({autoPlace:false});
@@ -30,7 +30,7 @@ function initJelly(){
 
 
   bait = new THREE.Mesh(
-    new THREE.IcosahedronGeometry( 10.1 , 1 ),
+    new THREE.IcosahedronGeometry( 30 , 4 ),
     new THREE.MeshBasicMaterial({side:THREE.DoubleSide})
   );
 
@@ -66,6 +66,9 @@ function initJelly(){
  Jelly.bait = bait;
  Jelly.headMesh = headMesh;
 
+ bait.position.x = 1000;
+ headMesh.position.x = 1000;
+
 
     bait.velocity = new THREE.Vector3();
     headMesh.velocity = new THREE.Vector3();
@@ -74,7 +77,7 @@ function initJelly(){
     headMesh.oldPosition = new THREE.Vector3();
 
  scene.add(bait);
- scene.add(headMesh);
+ //scene.add(headMesh);
 
 
 
@@ -159,12 +162,19 @@ function initJelly(){
   Jelly.head = new FurryHead( Jelly , headMesh ,{
   });
 
+
   Jelly.mainTail = new FurryTail( Jelly , headMesh , {
     simulationUniforms: mainUniforms,
     sim:shaders.ss.mainTail,
     size: 32,
     particleSize:40
   });
+
+
+
+  Jelly.mainTail.physicsRenderer.simulation.uniforms["t_posMain"] = { type:"t", value:null}
+  Jelly.head.physicsRenderer.addBoundTexture(Jelly.mainTail.physicsRenderer , "t_posMain" , "output");
+
 
 
   for(var i = 0; i < 0; i++ ){

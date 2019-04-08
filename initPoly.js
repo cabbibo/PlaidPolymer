@@ -27,7 +27,8 @@ function Poly( id , note ){
       uniforms:{
         t_audio:{type:"t",value:this.note.texture},
         time:G.uniforms.time,
-        jelly:{type:"v3",value:headMesh.position}
+        jelly:{type:"v3",value:headMesh.position},
+        active:{type:"f",value:0}
       },
       vertexShader: shaders.vs.poly,
       fragmentShader: shaders.fs.poly,
@@ -54,9 +55,9 @@ function Poly( id , note ){
 
 
 
-  this.mesh.position.y = (Math.random()-.5) * screen.height;
-  this.mesh.position.x = (Math.random()-.5) * screen.width;
-  this.mesh.position.z = (Math.random()-.5) * 100;
+  this.mesh.position.y = 1.3*((((id % 4)+.5)/4)-.5) * window.innerHeight;
+  this.mesh.position.x = 1.3*(((Math.floor(id /4)+.5)/5)-.5) * window.innerWidth;
+  this.mesh.position.z = 0;//(Math.random()-.5) * 100;
 
   this.mesh.material.map = this.note.texture;
 
@@ -102,11 +103,14 @@ Poly.prototype = {
 
   activate:function(){
     this.active = true;
+    this.mesh.material.uniforms.active.value = 1;
     this.note.gain.gain.value = 1;
   },
 
   deactivate: function(){
-    this.active = false
+    this.active = false;
+
+    this.mesh.material.uniforms.active.value = 0;
     this.note.gain.gain.value = 0;
   },
 
@@ -144,7 +148,7 @@ Poly.prototype = {
     this.activate();
 
     Jelly.updateBaitPos( this.mesh.position );
-    Jelly.searching = this;
+    Jelly.bait.searching = this;
 
   }else{
        this.mesh.scale.x = 1;

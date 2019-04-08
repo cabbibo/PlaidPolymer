@@ -41,7 +41,7 @@
     vec3 tNorm = texture2D( t_normal , vUv ).xyz;
     tNorm = normalize( vec3( sin( tNorm.x * 10. ) , sin( tNorm.y * 10. ),sin( tNorm.z* 10. ))) ;
     
-    vec3 newNormal = normalize( vNormal +  tNorm * 1.);
+    vec3 newNormal = normalize( vNormal +  tNorm * .001);
 
     vec3 nNormal = normalize( vNormalMat * newNormal  );
     vec3 nView = normalize(vView);
@@ -71,7 +71,7 @@
 
     vec3 lookup_table_color = cubicCurve( inverse_dot_view * facingRatio , c1 , c2 , c3 , c4 );
 
-    vec3 audioColor = texture2D( t_audio , vec2(  inverse_dot_view * facingRatio , 0. ) ).xyz;
+    vec3 audioColor = texture2D( t_audio , vec2(  abs(newDot) * .5 , 0. ) ).xyz;
 
     vec3 halfv        = normalize( vLightDir + nView ); 
     float specDot     = max( 0. , dot( nNormal , halfv ));
@@ -79,7 +79,7 @@
 
     vec3 sC = vec3( 1. , 1. , 1. ) * specularity;
 
-    gl_FragColor.rgb = newNormal * .5 + .5 ;///lookup_table_color * (vec3(.3) + audioColor*.7) +sC;
+    gl_FragColor.rgb =audioColor; ///newNormal * .5 + .5 ;///lookup_table_color * (vec3(.3) + audioColor*.7) +sC;
     gl_FragColor.a = 1.;
   
   } 

@@ -33,7 +33,9 @@ void main(){
   vID = vec2( position.y , 0. );
 
 
-  vec3 fPos = pos.xyz + length(a) * ((uv2.x - .5)  * left + (uv2.y-.5) * up) * 20. * position.y;
+  vec3 fPos = pos.xyz + length(a) * ((uv2.x - .5)  * left + (uv2.y-.5) * up) * 10. * position.y;
+
+
   vec4 mvPos = modelViewMatrix * vec4( fPos , 1.0 );
   gl_Position = projectionMatrix * mvPos;
 

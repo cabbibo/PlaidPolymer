@@ -168,7 +168,8 @@
     this.pTexture;
     if( !FURRY_POSITIONS_TEXTURE ){ 
       var mesh = new THREE.Mesh( new THREE.SphereGeometry( Math.random() ) ); 
-      this.pTexture = ParticleUtils.createPositionsTexture( this.size , mesh ); 
+      mesh.position.x = window.innerWidth;
+      this.pTexture = this.createPosTexture(this.size);//ParticleUtils.createPositionsTexture( this.size , mesh ); 
       FURRY_POSITIONS_TEXTURE = this.pTexture;
     }else{
       this.pTexture = FURRY_POSITIONS_TEXTURE;//this.createLineGeo();
@@ -194,6 +195,56 @@
 
   }
 
+
+  FurryTail.prototype.createPosTexture = function( size ){
+
+
+    var data = new Float32Array( size * size * 4 );
+
+    for ( var i = 0, l = data.length; i < l; i += 4 ) {
+
+      var y = Math.floor( (i/4) / size );
+      var x = (i/4)  - (y * size);
+
+
+      var theta = 2 * Math.PI * ( x / size );
+
+      var r =( .1 * Math.random() + .9) * 1;
+      var posX = r * Math.cos( theta );
+      var posZ = r * Math.sin( theta );
+
+      /*var face = geometry.faces[ Math.floor( Math.random() * facesLength ) ];
+
+      var vertex1 = geometry.vertices[ face.a ];
+      var vertex2 = geometry.vertices[ Math.random() > 0.5 ? face.b : face.c ];
+
+      point.subVectors( vertex2, vertex1 );
+      point.multiplyScalar( Math.random() );
+      point.add( vertex1 );*/
+
+      data[ i ]     = 1000 +posX;
+      data[ i + 1 ] = 1000 +posZ;
+      data[ i + 2 ] = 1000 +-(1 - (y/size))*100;
+      data[ i + 3 ] = 1;
+
+    }
+
+    var positionsTexture = new THREE.DataTexture(
+      data, 
+      size, 
+      size, 
+      THREE.RGBAFormat, 
+      THREE.FloatType 
+    );
+
+    positionsTexture.minFilter = THREE.NearestFilter;
+    positionsTexture.magFilter = THREE.NearestFilter;
+    positionsTexture.generateMipmaps = false;
+    positionsTexture.needsUpdate = true;
+
+    return positionsTexture;
+
+  };
 
   FurryTail.prototype.setColors = function( color1 , color2 , color3 ){
 
@@ -539,37 +590,37 @@
 
 
 
-          positions[ p1 + 0] = 0 * size ;
+          positions[ p1 + 0] = (21 + j) * size;;
           positions[ p1 + 1 ] = i * size ;
           positions[ p1 + 2 ] = 0;
 
-          positions[ p1 + 3 ] = 0 * size ;
+          positions[ p1 + 3 ] = (21 + j) * size;;
           positions[ p1 + 4 ] = i * size ;
           positions[ p1 + 5 ] = 1;
 
           positions[ p1 + 6 ] = (21 + j) * size;
-          positions[ p1 + 7 ] = i  * size;
+          positions[ p1 + 7 ] = (i+1)  * size;
           positions[ p1 + 8 ] = 0;
 
           positions[ p1 + 9  ] = (21 + j) * size;
-          positions[ p1 + 10 ] = i * size;
+          positions[ p1 + 10 ] = (i+1)* size;
           positions[ p1 + 11 ] = 1;
 
 
             // Stores the other part of the line
           colors[ p1 + 0]  = (21 + j) * size;
-          colors[ p1 + 1 ] = i * size ;
+          colors[ p1 + 1 ] = (i+1) * size ;
           colors[ p1 + 2 ] = 0;
 
           colors[ p1 + 3 ] = (21 + j) * size;
-          colors[ p1 + 4 ] = i * size ;
+          colors[ p1 + 4 ] = (i+1) * size ;
           colors[ p1 + 5 ] = 0;
 
-          colors[ p1 + 6 ] = 0 * size ;
+          colors[ p1 + 6 ] = (21 + j) * size;
           colors[ p1 + 7 ] = i * size;
           colors[ p1 + 8 ] = 1;
 
-          colors[ p1 + 9  ] = 0 * size ;
+          colors[ p1 + 9  ] = (21 + j) * size;
           colors[ p1 + 10 ] = i * size;
           colors[ p1 + 11 ] = 1;
 

@@ -2,6 +2,7 @@
 uniform sampler2D t_oPos;
 uniform sampler2D t_pos;
 uniform sampler2D t_audio;
+uniform sampler2D t_posMain;
 
 uniform vec3 flow;
 
@@ -128,9 +129,9 @@ void main(){
       vec4 otherPos = texture2D( t_pos , vec2( vUv.x , vUv.y - size ) ); 
       
       vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
-      force += attract * 300.;
+      force += attract * 300. * (1.-vUv.y * .5);
 
-      force += flow * ( 1. -  vUv.y);
+     // force += flow * ( 1. -  vUv.y);
 
     }
 
@@ -245,7 +246,31 @@ void main(){
     }else{
 
 
-       vec4 otherPos = texture2D( t_pos , vec2( hSize , vUv.y ) );
+
+
+ // If we are the upper most spine
+    // We are connected to the leader
+    if( mI.y < 1.){
+
+
+      vec4 otherPos = texture2D( t_posMain , vec2( ((vUv.x * 32.)-21.)/11. , 1. ) ); 
+      
+      vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
+      force += attract * 1000.;
+    // Every other vertabrae in the spine
+    // Gets attracted to the one above it
+    }else{
+
+      vec4 otherPos = texture2D( t_pos , vec2( vUv.x , vUv.y - size ) ); 
+      
+      vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
+      force += attract * 1000.;
+
+      //force += flow * ( 1. -  vUv.y);
+
+    }
+
+     /*  vec4 otherPos = texture2D( t_pos , vec2( hSize , vUv.y ) );
 
 
       vec3 attract = springForce( otherPos.xyz , pos.xyz , f_dist_bundleAttract * aF  );
@@ -269,7 +294,7 @@ void main(){
 
         }
 
-      }
+      }*/
 
     }
 

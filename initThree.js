@@ -48,11 +48,12 @@ function initThree(){
     document.body.appendChild( stats.domElement );
 
     // Setting up our Renderer
-    renderer = new THREE.WebGLRenderer({ autoClear:false });
+    renderer = new THREE.WebGLRenderer();
 
-    renderer.autoClear = false;
-    renderer.gammaOutput = true;
-    renderer.gammaInput = true;
+    var r = window.devicePixelRatio || 1;
+    renderer.setPixelRatio(r);
+
+
     renderer.setSize( window.innerWidth, window.innerHeight );
     //renderer.setClearColor( 0x000000 , 0 );
     container.appendChild( renderer.domElement );
@@ -60,19 +61,6 @@ function initThree(){
     // Making sure our renderer is always the right size
     window.addEventListener( 'resize', onWindowResize , false );
 
-    var stars = THREE.ImageUtils.loadTexture( 'icons/starMap.png' );
-    var geo = new THREE.SphereGeometry(4000 , 50 , 50 )
-    var mat = new THREE.MeshBasicMaterial({
-
-      side: THREE.BackSide,
-      map: stars,
-      depthWrite: false
-
-    });
-    starMap = new THREE.Mesh( geo , mat );
-
-   // scene.add( starMap );
-    starMap.position = camera.position;
 
 
 

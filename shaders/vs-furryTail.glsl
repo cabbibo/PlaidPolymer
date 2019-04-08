@@ -78,7 +78,7 @@ void main(){
 
 
 if( position.x > 20.5/32. || color.x >  20.5/32. ){
-  fPos = vec3(0.,0.,0.);
+ // fPos = vec3(0.,0.,0.);
 }
 
 

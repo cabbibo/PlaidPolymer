@@ -1,6 +1,7 @@
 
 uniform sampler2D t_audio;
 uniform vec3 jelly;
+uniform float active;
 
 varying vec3 vPos;
 varying vec3 vNorm;
@@ -33,6 +34,6 @@ void main(){
   vec3 lamb = dot( nNormal , normalize(jelly - vWorld)) * vec3(1.,.4,.2);
 
   vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 ;
-  gl_FragColor = vec4(lamb, 1.0 );
+  gl_FragColor = vec4(lamb * active, 1.0 );
 
 }

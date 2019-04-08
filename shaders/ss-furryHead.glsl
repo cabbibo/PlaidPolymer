@@ -182,7 +182,7 @@ void main(){
 
   vec3 pointPower = distToPoint ;
 
-  p = pos.xyz +vel*.5+( pointPower );//* (noiseAmount-.6) + .8 * pointInCircle);
+  p = pos.xyz +vel*.9+( pointPower );//* (noiseAmount-.6) + .8 * pointInCircle);
   gl_FragColor = vec4( p , 1. );
 
 
