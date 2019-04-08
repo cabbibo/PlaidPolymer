@@ -142,7 +142,7 @@ var ParticleUtils = {
 
     geo.setIndex(indices);
     geo.addAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-    geo.addAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+    geo.addAttribute('uv2',new THREE.Float32BufferAttribute(uvs,2));
 
 
     return geo;

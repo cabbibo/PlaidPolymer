@@ -118,6 +118,7 @@
       uniforms: this.particleUniforms,
       vertexShader: shaders.vs.furryParticles,
       fragmentShader: shaders.fs.furryParticles,
+      side:THREE.DoubleSide
       //transparent: true,
       //depthWrite: false
     })
@@ -139,8 +140,6 @@
     var pR = this.physicsRenderer;
     
     pR.addBoundTexture( this.physicsParticles , 't_pos' , 'output' );
-    pR.addBoundTexture( this.physicsParticles , 't_oPos' , 'oOutput' );
-    pR.addBoundTexture( this.physicsParticles , 't_ooPos' , 'ooOutput' );
  
     var lineMat = new THREE.ShaderMaterial({
       uniforms: this.lineUniforms,
