@@ -34,6 +34,7 @@
       },
     
       particleSize: 10.,
+      lineWidth: 1
       //iriLookup: THREE.ImageUtils.loadTexture('img/iri/rainbow.png')
 
     });
@@ -58,10 +59,7 @@
       t_ooPos:{ type:"t" , value:null },
       //t_audio:{ type:"t" , value:null },
       t_audio: G.uniforms.t_audio,
-      color1: { type:"v3" , value:this.color1 },
-      color2: { type:"v3" , value:this.color2 },
-      color3: { type:"v3" , value:this.color3 },
-      color4: { type:"v3" , value:this.color4 },
+      lineWidth:{ type:"f",value:this.lineWidth}
     }
 
     this.particleUniforms = {
@@ -256,7 +254,7 @@
   FurryTail.prototype.activate = function(){
 
     this.page.add( this.physicsParticles );
-    this.page.add( this.line );
+    //this.page.add( this.line );
     //this.page.add( this.leader );  
 
     this.active = true;
@@ -267,7 +265,7 @@
 
     console.log('HELLO');
     this.page.scene.remove( this.physicsParticles );
-    this.page.scene.remove( this.line );
+    //this.page.scene.remove( this.line );
     //this.page.scene.remove( this.leader );
 
     this.active = false;

@@ -1,5 +1,5 @@
 
-
+DLD = false;
 function initPoly(){
 
   for( var i = 0; i < loopList.length; i++ ){
@@ -21,6 +21,7 @@ function Poly( id , note ){
 
   this.active = false;
 
+
   this.mesh = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 40.1 , 2 ),
       new THREE.ShaderMaterial({
@@ -28,7 +29,7 @@ function Poly( id , note ){
         t_audio:{type:"t",value:this.note.texture},
         time:G.uniforms.time,
         jelly:{type:"v3",value:headMesh.position},
-        active:{type:"f",value:0}
+        active:{type:"f",value:1}
       },
       vertexShader: shaders.vs.poly,
       fragmentShader: shaders.fs.poly,
@@ -50,8 +51,23 @@ function Poly( id , note ){
     })
   );
 
+  this.organicMesh = new THREE.Mesh(
+    new THREE.IcosahedronGeometry( 40.1 , 5 ),
+      new THREE.ShaderMaterial({
+      uniforms:{
+        t_audio:{type:"t",value:this.note.texture},
+        time:G.uniforms.time,
+        jelly:{type:"v3",value:headMesh.position},
+        active:{type:"f",value:1}
+      },
+      vertexShader: shaders.vs.polyOrg,
+      fragmentShader: shaders.fs.polyOrg,
+      flatShading:true
+    }));
+
 
   this.mesh.add(this.bgMesh);
+
 
 
 
@@ -59,6 +75,8 @@ function Poly( id , note ){
   this.mesh.position.x = 1.3*(((Math.floor(id /4)+.5)/5)-.5) * window.innerWidth;
   this.mesh.position.z = 0;//(Math.random()-.5) * 100;
 
+
+  this.organicMesh.position.copy( this.mesh.position );
   this.mesh.material.map = this.note.texture;
 
   this.mesh.hoverOver = function(){
@@ -78,6 +96,8 @@ function Poly( id , note ){
   }.bind( this );
 
   objectControls.add( this.mesh );
+
+  this.deactivate
 
 }
 
@@ -103,7 +123,12 @@ Poly.prototype = {
 
   activate:function(){
     this.active = true;
-    this.mesh.material.uniforms.active.value = 1;
+    //this.mesh.material.uniforms.active.value = 1;
+    this.organicMesh.material.uniforms.active.value = 1;
+ 
+    scene.remove( this.mesh );
+    scene.add( this.organicMesh );
+
     this.note.gain.gain.value = 1;
 
     var canDL = true;
@@ -112,28 +137,33 @@ Poly.prototype = {
     }
 
 
-    if( canDL ){
+    if( canDL && DLD == false ){
       var url="MaruLoops.zip";
       //window.open(url);
 
 
-var zip_file_path = url; //put inside "" your path with file.zip
-var zip_file_name = "Maru Loops" //put inside "" file name or something
-var a = document.createElement("a");
-document.body.appendChild(a);
-a.style = "display: none";
-a.href = zip_file_path;
-a.download = zip_file_name;
-a.click();
-document.body.removeChild(a);
+      var zip_file_path = url; //put inside "" your path with file.zip
+      var zip_file_name = "Maru Loops" //put inside "" file name or something
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = zip_file_path;
+      a.download = zip_file_name;
+      a.click();
+      document.body.removeChild(a);
+      DLD = true;
+
     }
   },
 
   deactivate: function(){
     this.active = false;
 
-    this.mesh.material.uniforms.active.value = 0;
+    this.mesh.material.uniforms.active.value = 1;
+    this.organicMesh.material.uniforms.active.value = 1;
     this.note.gain.gain.value = 0;
+    scene.add( this.mesh );
+    scene.remove( this.organicMesh );
   },
 
 
@@ -143,6 +173,10 @@ document.body.removeChild(a);
       this.mesh.scale.x = 1.1;
       this.mesh.scale.y = 1.1;
       this.mesh.scale.z = 1.1;
+
+      this.organicMesh.scale.x = 1.1;
+      this.organicMesh.scale.y = 1.1;
+      this.organicMesh.scale.z = 1.1;
     }
 
     console.log( this);
@@ -155,6 +189,10 @@ document.body.removeChild(a);
       this.mesh.scale.x = 1;
       this.mesh.scale.y = 1;
       this.mesh.scale.z = 1;
+
+      this.organicMesh.scale.x = 1;
+      this.organicMesh.scale.y = 1;
+      this.organicMesh.scale.z = 1;
     }
 
 
@@ -167,15 +205,24 @@ document.body.removeChild(a);
     this.mesh.scale.x = 1.5;
     this.mesh.scale.y = 1.5;
     this.mesh.scale.z = 1.5;
+
+    this.organicMesh.scale.x = 1.5;
+    this.organicMesh.scale.y = 1.5;
+    this.organicMesh.scale.z = 1.5;
     this.activate();
 
     Jelly.updateBaitPos( this.mesh.position );
     Jelly.bait.searching = this;
 
   }else{
-       this.mesh.scale.x = 1;
+    this.mesh.scale.x = 1;
     this.mesh.scale.y = 1;
     this.mesh.scale.z = 1;
+
+
+    this.organicMesh.scale.x = 1.5;
+    this.organicMesh.scale.y = 1.5;
+    this.organicMesh.scale.z = 1.5;
     this.deactivate();
   }
   },

@@ -177,14 +177,16 @@ function initJelly(){
 
 
 
-  for(var i = 0; i < 0; i++ ){
+  for(var i = 0; i < 6; i++ ){
     var tail = new FurryTail( Jelly , headMesh ,{
-      simulationUniforms: allUniforms
+      simulationUniforms: allUniforms,
+      lineWidth:.2,
+      particleSize:3
     });
     Jelly.tails.push( tail );
   }
 
-  for(var i = 0; i < 0; i++ ){
+  for(var i = 0; i < 6; i++ ){
       
       Jelly.tails[i].physicsRenderer.simulation.uniforms["t_posMain"] = { type:"t", value:null}
       Jelly.tails[i].physicsRenderer.simulation.uniforms["tailID"] = { type:"f", value:i}
@@ -206,27 +208,19 @@ function initJelly(){
     this.add( this.head.mesh );
     //this.head.mesh.scale.multiplyScalar( .001 );
 
-/*this.add( this.tails[0].line );
-    this.add( this.tails[1].line );
-    this.add( this.tails[2].line );
-    this.add( this.tails[3].line );
-    this.add( this.tails[4].line );
-    this.add( this.tails[5].line );
 
-    this.add( this.tails[0].physicsParticles );
-    this.add( this.tails[1].physicsParticles );
-    this.add( this.tails[2].physicsParticles );
-    this.add( this.tails[3].physicsParticles );
-    this.add( this.tails[4].physicsParticles );
-    this.add( this.tails[5].physicsParticles );*/
+    for( var i = 0; i < this.tails.Length; i++ ){
+      //this.add( this.tails[i].line);
+     // this.add( this.tails[i].physicsParticles);
+    }
 
     this.add( this.mainTail.line );
     this.add( this.mainTail.physicsParticles );
 
     
-    /*for( var i = 0; i < this.tails.length; i++ ){
+    for( var i = 0; i < this.tails.length; i++ ){
       this.tails[i].activate();
-    }*/
+    }
 
   }
 

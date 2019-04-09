@@ -2,7 +2,7 @@ uniform sampler2D t_pos;
 uniform sampler2D t_oPos;
 uniform sampler2D t_ooPos;
 uniform sampler2D t_audio;
-
+uniform float lineWidth;
 
 attribute vec3 color;
 attribute float idInTail;
@@ -62,7 +62,7 @@ void main(){
 
   vec3 left = normalize(cross(dir, vec3(0.,0.,1.)));
 
-  vec3 fPos = pos.xyz - left * 10. * length(a)* (position.z -.5);
+  vec3 fPos = pos.xyz - left * 10.  * lineWidth * length(a)* (position.z -.5);
 
 
   vID = vec2(idInTail,position.y);
@@ -74,7 +74,7 @@ void main(){
 
 
 
-  vColor = spectral(vID.y + idInTail * .1);
+  vColor = spectral(vID.y + idInTail * .1 - .3);
 
 
 if( position.x > 20.5/32. || color.x >  20.5/32. ){
