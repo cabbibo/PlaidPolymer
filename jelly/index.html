@@ -5,6 +5,50 @@
   <body>
 
       <div id="GUI">
+
+
+  </div>
+
+  <div id="TITLE">
+    <h1>PLAID  POLYMER</h1>
+
+  </div>
+
+  <div id="MailChimp">
+    
+    <div class="headline" >
+        <!-- <h5>Experience</h5> -->
+        
+        <span id="email-signup-text">
+          Sign up for a free download of Maru. 
+        </span>
+
+        <!-- Begin Mailchimp Signup Form -->
+        <div id="mc_embed_signup">
+        <form action="https://robbietilton.us13.list-manage.com/subscribe/post?u=c0ddd892fa950255db1e90506&amp;id=7479db8399" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+            <div id="mc_embed_signup_scroll">
+          
+          <div class="mc-field-group">
+            <input autocomplete="off" spellcheck="false" id="subscribeField" placeholder="Email Address" type="email" value="" name="EMAIL" class="required email">
+            <input id="subscribeBtn" type="submit" value="" name="subscribe" class="button">
+              </div>
+          </div>
+
+          <div id="mce-responses" class="clear">
+            <div class="response" id="mce-error-response" style="display:none"></div>
+            <div class="response" id="mce-success-response" style="display:none"></div>
+          </div>    
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0ddd892fa950255db1e90506_7479db8399" tabindex="-1" value=""></div>
+
+        </form>
+        </div>
+        <!--End mc_embed_signup-->
+
+
+        <div id="Close" onclick="doClick()">X</div>
+        
+        
+      </div>
   </div>
 
 
@@ -40,6 +84,16 @@
 
 
 <script>  
+
+  function doClick(){
+    var x = document.getElementById("MailChimp");
+    x.style.display = "none";
+  }
+
+  function displaySignUp(){
+     var x = document.getElementById("MailChimp");
+    x.style.display = "block";
+  }
 
   function c(val){console.log(val);}
   var container , camera, scene, renderer , stats;

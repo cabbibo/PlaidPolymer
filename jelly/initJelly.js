@@ -31,7 +31,7 @@ function initJelly(){
 
   bait = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 30 , 4 ),
-    new THREE.MeshBasicMaterial({side:THREE.DoubleSide})
+    new THREE.MeshBasicMaterial({color:0xaec5d4 ,side:THREE.DoubleSide})
   );
 
   headMesh = new THREE.Mesh(
@@ -189,10 +189,13 @@ function initJelly(){
   for(var i = 0; i < 6; i++ ){
       
       Jelly.tails[i].physicsRenderer.simulation.uniforms["t_posMain"] = { type:"t", value:null}
+       Jelly.tails[i].physicsRenderer.simulation.uniforms["t_posHead"] = { type:"t", value:null}
+     
       Jelly.tails[i].physicsRenderer.simulation.uniforms["tailID"] = { type:"f", value:i}
       
       Jelly.mainTail.physicsRenderer.addBoundTexture(Jelly.tails[i].physicsRenderer , "t_posMain" , "output");
-    
+    Jelly.head.physicsRenderer.addBoundTexture(Jelly.tails[i].physicsRenderer , "t_posHead" , "output");
+
   }
 
 

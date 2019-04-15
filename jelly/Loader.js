@@ -32,9 +32,9 @@ function Loader(  params ){
         
     this.loadBar.style.position      = 'absolute';
     this.loadBar.style.top           = '50%';
-    this.loadBar.style.height        = '1px';
+    this.loadBar.style.height        = '10px';
     this.loadBar.style.width         = '10px';
-    this.loadBar.style.background    = '#fff';
+    this.loadBar.style.background    = '#2c2b47';
 
 
 
@@ -42,16 +42,18 @@ function Loader(  params ){
     this.loadInfo.id = 'loadInfo';
 
     this.curtain.appendChild( this.loadInfo );
+
+
     
     this.loadBarAddAmount = window.innerWidth / (this.numberToLoad+1);
-
     this.curtain.appendChild( this.loadBar );
 
-    this.loadingGif     = document.createElement( 'img' );
+
+    /*this.loadingGif     = document.createElement( 'img' );
     this.loadingGif.src = this.params.loadGif;
     this.loadingGif.id  = 'loadingGif';
     this.loadingGif.width = 100;
-    this.loadingGif.height = 100;
+    this.loadingGif.height = 100;*/
   
 
 
@@ -59,13 +61,14 @@ function Loader(  params ){
 
     var curtainTemp = this.curtain;
 
-    this.loadingGif.onload = function(){
+    /*this.loadingGif.onload = function(){
    
+
       this.style.marginLeft  = "-" + this.width / 2 + "px";
       this.style.marginTop   = "-" + ( 10 + this.height / 2 ) + "px";
       curtainTemp.appendChild( this );
 
-    }
+    }*/
 
     this.addStartButton();
 
@@ -101,12 +104,17 @@ function Loader(  params ){
 
     updateLoadBar: function(){
 
+      console.log("update Load Barr")
+
       console.log( this.numberToLoad + " ,  " + this.numberLoaded );
 
       //console.log('HELLOS');
+      console.log(this.numberToLoad);
+      console.log(window.innerWidth);
       this.loadBarAddAmout = window.innerWidth / this.numberToLoad;
+      console.log( this.loadBarAddAmount );
 
-      var loadBarWidth = this.loadBarAddAmount * this.numberLoaded;
+      var loadBarWidth = (this.loadBarAddAmount/this.numberToLoad) * this.numberLoaded;
       this.loadBar.style.width = loadBarWidth + "px";
 
     },
@@ -114,14 +122,17 @@ function Loader(  params ){
 
     loadBarAdd: function(){
 
-      var oldWidth = parseInt( this.loadBar.style.width );
+    /*  var oldWidth = parseInt( this.loadBar.style.width );
       var newWidth = oldWidth + this.loadBarAddAmount;
 
-      this.loadBar.style.width = newWidth + "px";
+      this.loadBar.style.width = newWidth + "px";*/
 
       this.numberLoaded ++;
 
       c("THIS MANNY: " + this.numberLoaded);
+      this.updateLoadBar();
+
+      c( this.loadBar.style.width );
 
       this.checkConditions();
 
@@ -305,7 +316,7 @@ function Loader(  params ){
     liftCurtain: function(){
 
       var self = this;
-      $(this.curtain).fadeOut(300,function(){
+      $(this.curtain).fadeOut(2000,function(){
         self._onStart();
       });
 

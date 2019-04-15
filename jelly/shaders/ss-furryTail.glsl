@@ -2,14 +2,12 @@
 uniform sampler2D t_oPos;
 uniform sampler2D t_pos;
 uniform sampler2D t_audio;
-
 uniform sampler2D t_posMain;
-uniform float tailID;
+uniform sampler2D t_posHead;
 
 uniform vec3 flow;
 
-uniform float dT;
-uniform float timer;
+uniform float dT;uniform float tailID;
 
 
 uniform float audioPower;
@@ -51,7 +49,7 @@ varying vec2 vUv;
 const float size = 1. / 32.;
 const float hSize = size / 2.;
 
-float maxVel= 350.;//= 250.  + 125. * sin(timer);
+const float maxVel = 250.;
 
 vec3 springForce( vec3 toPos , vec3 fromPos , float staticLength ){
 
@@ -61,7 +59,7 @@ vec3 springForce( vec3 toPos , vec3 fromPos , float staticLength ){
 
   vec3 springDif = balance - dif;
 
-  return 10000. * springDif;
+  return 10. * springDif;
 
 }
 
@@ -69,17 +67,18 @@ $simplex
 
 void main(){
 
+
   // Making sure the tails don't go outside the heads
   float f_dist_spineAttract   = dist_spineAttract   ;
-  float f_dist_subSubAttract  = dist_subSubAttract  * vUv.y;
-  float f_dist_subSubRepel    = dist_subSubRepel    * vUv.y;
-  float f_dist_subAttract     = dist_subAttract     * vUv.y;
-  float f_dist_subRepel       = dist_subRepel       * vUv.y;
-  float f_dist_bundleAttract  = dist_bundleAttract  * vUv.y;
-  float f_dist_bundleRepel    = dist_bundleRepel    * vUv.y;
+  float f_dist_subSubAttract  = 10.;//dist_subSubAttract  * vUv.y;
+  float f_dist_subSubRepel    = 10.;//dist_subSubRepel    * vUv.y;
+  float f_dist_subAttract     = 10.;//dist_subAttract     * vUv.y;
+  float f_dist_subRepel       = 10.;//dist_subRepel       * vUv.y;
+  float f_dist_bundleAttract  = 0.;//dist_bundleAttract  * vUv.y;
+  float f_dist_bundleRepel    = 0.;//dist_bundleRepel    * vUv.y;
 
-  vec4 oPos = texture2D( t_oPos , vUv );
-  vec4 pos  = texture2D( t_pos , vUv );
+  vec4 oPos = texture2D( t_oPos , vUv - (.1 * size) );
+  vec4 pos  = texture2D( t_pos , vUv - (.1 * size) );
 
   float life = pos.w;
   life -= .1;
@@ -117,13 +116,13 @@ void main(){
   if( mI.x < 1.){
 
 
+
+
+
     // If we are the upper most spine
     // We are connected to the leader
     if( mI.y < 1.){
 
-      vec3 attract = springForce( leader.xyz , pos.xyz , f_dist_spineAttract );
-      
-      vec4 otherPos = texture2D( t_posMain , vec2( vUv.x , 0. ) ); 
       force += 1000.*(leader.xyz - pos.xyz);
 
     
@@ -133,31 +132,22 @@ void main(){
 
       vec4 otherPos = texture2D( t_pos , vec2( vUv.x , vUv.y - size ) ); 
       
-      vec3 attract = springForce( otherPos.xyz , pos.xyz , f_dist_spineAttract );
-      force += attract * force_spineAttract;
-
-      force += flow * ( 1. -  vUv.y);
+      vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
+      force += attract * 700. * (1.-vUv.y * .5);
 
 
-vec3 other;
-
-vec3 dir = normalize( pos.xyz - otherPos.xyz );
-
-    
-    float f2 = -1000.; 
-    other = texture2D( t_posMain , vec2( vUv.x , size ) ).xyz;
-    vec3 otherDir = other.xyz - texture2D( t_posMain , vec2(vUv.x,0.) ).xyz;
-    vec3 otherDir2 = other.xyz - texture2D( t_posMain ,vec2(vUv.x,2.*size) ).xyz;
-  
-    vec3 x1 = normalize( cross( leaderVel * 1000., vec3(0.,0.,1.)) );
-    vec3 y1 = normalize( cross( x1 , leaderVel * 1000. ));
+      vec3 x1 = normalize( cross( leaderVel * 1000., vec3(0.,0.,1.)) );
+      vec3 y1 = normalize( cross( x1 , leaderVel * 1000. ));
 
 
-    float r = (tailID /6.) * 6.28;
-    force += 3000.* (x1 * sin( r) + y1 * cos( r));
+      float r = (tailID /6.) * 6.28;
+      force += 1000.* (x1 * sin( r) + y1 * cos( r));
+
+     // force += flow * ( 1. -  vUv.y);
 
     }
 
+ 
 
 
 
@@ -172,10 +162,17 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
     if( mI.x < 5. ){
 
       vec4 otherPos = texture2D( t_pos , vec2( hSize , vUv.y ) );
+
+      vec3 otherUp =  texture2D( t_pos , vec2( hSize , vUv.y - size )).xyz;
+
+      vec3 otherVel = otherUp - otherPos.xyz;
+      if( vUv.y <= size ){
+        otherVel = leaderVel;
+      }
  
       // Attract to the column
-      vec3 attract = springForce( otherPos.xyz , pos.xyz , f_dist_subAttract * aF );
-      force += attract * force_subAttract;
+      vec3 attract = (otherPos.xyz - pos.xyz) * 400.;// springForce( otherPos.xyz , pos.xyz , f_dist_subAttract * aF );
+      force += attract;// * force_subAttract;
 
       // Get the 'index' of this verta 
       // in the 4 first level sub objects
@@ -190,13 +187,22 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
         // repel the other ones
         if( (i - index) != 0 ){
 
-          float lookup = (float(i) * size) -  hSize;
+          float lookup = (float(i) * size) +  1.5 * hSize;
 
           vec4 otherPos = texture2D( t_pos , vec2( lookup , vUv.y ) );
 
-          vec3 attract = springForce(  pos.xyz , otherPos.xyz , f_dist_subRepel * aF );
+          vec3 attract =  springForce(  pos.xyz , otherPos.xyz , 100. * vUv.y );
 
-          force -= attract * force_subRepel;  
+
+        vec3 x1 = normalize( cross( otherVel * 1000., vec3(0.,0.,1.)) );
+        vec3 y1 = normalize( cross( x1 , otherVel * 1000. ));
+      
+        float tailID = vUv.x * 32. - 1.; 
+    
+        float r = (tailID /4.) * 6.28;
+        force += 10000.* (x1 * sin( r) + y1 * cos( r)) * vUv.y;
+
+         // force -= attract * 60.;// force_subRepel;  
         
         }
       }
@@ -216,9 +222,9 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
 
       vec4 otherPos = texture2D( t_pos , vec2( lookup , vUv.y ) );
 
-      vec3 attract = springForce( otherPos.xyz , pos.xyz , f_dist_subSubAttract * aF  );
+      vec3 attract = (otherPos.xyz - pos.xyz);//springForce( otherPos.xyz , pos.xyz , f_dist_subSubAttract * aF  );
 
-      force += attract * force_subSubAttract;
+      force += attract *  100.;//force_subSubAttract;
 
       int indexInChunk = index - int( chunk * 4. );
 
@@ -229,10 +235,21 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
           float lookup = (float(i) * size) + (size*4. + hSize) + (chunk * 4. * size);
 
           vec4 otherPos = texture2D( t_pos , vec2( lookup , vUv.y ) );
+          vec4 otherUp = texture2D( t_pos , vec2( hSize , vUv.y ) );
+          vec3 oVel = vec3( otherPos.xyz - otherUp.xyz);
 
-          vec3 attract = springForce( pos.xyz , otherPos.xyz  , f_dist_subSubRepel * aF  );
 
-          force -= attract * force_subSubRepel;           
+        vec3 x1 = normalize( cross( oVel * 1000., vec3(0.,0.,1.)) );
+        vec3 y1 = normalize( cross( x1 , oVel * 1000. ));
+      
+        float tailID = vUv.x * 32. - 1.; 
+    
+        float r = (tailID /4.) * 6.28;
+        force += 3000.  * (x1 * sin( r) + y1 * cos( r)) * vUv.y;
+
+          //vec3 attract = springForce( pos.xyz , otherPos.xyz  , f_dist_subSubRepel * aF  );
+
+          //force -= attract * force_subSubRepel;           
         }
 
       }
@@ -243,7 +260,31 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
     }else{
 
 
-       vec4 otherPos = texture2D( t_pos , vec2( hSize , vUv.y ) );
+
+
+ // If we are the upper most spine
+    // We are connected to the leader
+    if( mI.y < 1.){
+
+
+      vec4 otherPos = texture2D( t_posHead , vec2( ((((vUv.x * 32.)-21.)/11.)/6. + (tailID/6.) ) , 1. ) ); 
+      
+      vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
+      force += attract * 1000.;
+    // Every other vertabrae in the spine
+    // Gets attracted to the one above it
+    }else{
+
+      vec4 otherPos = texture2D( t_pos , vec2( vUv.x , vUv.y - size ) ); 
+      
+      vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
+      force += attract * 2000.;
+
+      //force += flow * ( 1. -  vUv.y);
+
+    }
+
+     /*  vec4 otherPos = texture2D( t_pos , vec2( hSize , vUv.y ) );
 
 
       vec3 attract = springForce( otherPos.xyz , pos.xyz , f_dist_bundleAttract * aF  );
@@ -267,7 +308,7 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
 
         }
 
-      }
+      }*/
 
     }
 
@@ -286,9 +327,9 @@ vec3 dir = normalize( pos.xyz - otherPos.xyz );
 
   }
 
-  //vel *= .7;
+  vel *= .999;
 
-  vec3 p = pos.xyz + vel * dT ; 
+  vec3 p = pos.xyz + vel  * dT ; 
 
   if( dT < .5 ){
   

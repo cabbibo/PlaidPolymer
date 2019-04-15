@@ -45,7 +45,7 @@ function initThree(){
     stats.domElement.style.right     = '0px';
     stats.domElement.style.zIndex    = '999';
 
-    document.body.appendChild( stats.domElement );
+   // document.body.appendChild( stats.domElement );
 
     // Setting up our Renderer
     renderer = new THREE.WebGLRenderer();
@@ -55,7 +55,7 @@ function initThree(){
 
 
     renderer.setSize( window.innerWidth, window.innerHeight );
-    //renderer.setClearColor( 0x000000 , 0 );
+    renderer.setClearColor( 0xaec5d4 , 1 );
     container.appendChild( renderer.domElement );
 
     // Making sure our renderer is always the right size

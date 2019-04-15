@@ -31,9 +31,10 @@ void main(){
 
   vec4 aColor = texture2D( t_audio , vec2( abs(iNViewDot) , 0.0));
 
-  vec3 lamb = dot( nNormal , normalize(jelly - vWorld)) * vec3(1.,.4,.2);
+  vec3 lamb = dot( nNormal , normalize(jelly - vWorld)) * vec3(1.,.8,.2);
+  vec3 fres = -dot( nNormal ,normalize(vView)) * vec3(1.,.5,.1);
 
   vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 ;
-  gl_FragColor = vec4(lamb * active, 1.0 );
+  gl_FragColor = vec4((lamb+fres + vec3(.8,.1,.1)) * active, 1.0 );
 
 }

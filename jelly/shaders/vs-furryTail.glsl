@@ -62,7 +62,7 @@ void main(){
 
   vec3 left = normalize(cross(dir, vec3(0.,0.,1.)));
 
-  vec3 fPos = pos.xyz - left * 10.  * lineWidth * length(a)* (position.z -.5);
+  vec3 fPos = pos.xyz - left * 10.  * lineWidth * (length(a)+3.)* (position.z -.5);
 
 
   vID = vec2(idInTail,position.y);
@@ -74,7 +74,7 @@ void main(){
 
 
 
-  vColor = spectral(vID.y + idInTail * .1 - .3);
+  vColor = vec3(44.,43.,71.)/255.;
 
 
 if( position.x > 20.5/32. || color.x >  20.5/32. ){

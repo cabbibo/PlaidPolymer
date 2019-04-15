@@ -28,6 +28,8 @@ void main(){
   vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 ;
 
   if( abs(vUv.x - .5) > .5 - length( aC ) ){ discard;}
-  gl_FragColor = vec4( vColor * aColor.xyz , 1.0 );
+
+
+  gl_FragColor = vec4( vColor + aColor.xyz , 1.0 );
 
 }

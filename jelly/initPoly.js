@@ -142,7 +142,7 @@ Poly.prototype = {
       //window.open(url);
 
 
-      var zip_file_path = url; //put inside "" your path with file.zip
+      /*var zip_file_path = url; //put inside "" your path with file.zip
       var zip_file_name = "Maru Loops" //put inside "" file name or something
       var a = document.createElement("a");
       document.body.appendChild(a);
@@ -151,7 +151,9 @@ Poly.prototype = {
       a.download = zip_file_name;
       a.click();
       document.body.removeChild(a);
-      DLD = true;
+      DLD = true;*/
+
+      displaySignUp();
 
     }
   },

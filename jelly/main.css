@@ -1,6 +1,6 @@
 html{
-  color:#000;
-  background:#000;
+  color:#2c2b47;
+  background:#aec5d4 ;
   font-family:"GeoSans";
   margin:0px;
   background-repeat:no-repeat;
@@ -10,8 +10,8 @@ html{
 }
 
 body{
-  color:#000;
-  background:#000;
+  color:#2c2b47;
+  background:#aec5d4;
   margin: 0px;
   overflow: hidden;
 }
@@ -30,7 +30,7 @@ body{
 
 #curious{
   text-align: center;
-  color: #fff;
+  color: #2c2b47;
   font-size: 20px;
   padding: 100px;
   display: none;
@@ -76,19 +76,19 @@ body{
 
 @font-face {
   font-family: "GeoSans";
-  src: url("GeosansLight.ttf");
+  src: url("../AlteHaasGroteskBold.ttf");
 }
+
 a{
 
-  color: #fff;
+  color: #2c2b47;
   text-decoration: none;
   underline: none;
 
 }
 
 a:hover{
-
-  text-decoration: underline;
+  color: #ffffff;
 
 }
 
@@ -106,12 +106,13 @@ a:hover{
 #curtain{
 
   position      : absolute;
-  z-index       : 999;
+  z-index       : 99;
   top           : 0px;
   left          : 0px;
   width         : 100%;
   height        : 100%;
-  background    : #000;
+  
+  background:#aec5d4;
 
 }
 
@@ -124,7 +125,7 @@ a:hover{
   position: absolute;
   left:0px;
   background: #000;
-  color:#fff;
+  color:#2c2b47
 
  text-align:center;
 
@@ -151,9 +152,9 @@ a:hover{
 
   position      : absolute;
   top           : 50%;
-  height        : 1px;
+  height        : 10px;
   width         : 0px;
-  background    : #fff;
+  background    : #2c2b47;
 
 }
 
@@ -163,6 +164,8 @@ a:hover{
   top           : 50%;
   left          : 50%;
   z-index       : -1;
+
+  background:#aec5d4;
 
 }
 
@@ -178,6 +181,7 @@ a:hover{
   text-align    : center;
   //background    : #fff;
 
+
 }
 
 #informationSection{
@@ -189,7 +193,7 @@ display:none;
   z-index:500px;
   right:0px;
   bottom:0px;
-  color:#fff;
+  color:#2c2b47;
   background: #000;
   opacity:.5;
   //border: 1px solid white;
@@ -296,7 +300,7 @@ display:none;
   font-size: 23px;
   bottom: 65px;
   opacity: .6;
-  color: #fff;
+  color: #2c2b47;
 }
 
 #GUI{
@@ -324,7 +328,7 @@ display:none;
 
   width:300px;
   height:300px;
-  color:#fff;
+  color:#2c2b47;
   position:absolute;
   left:50%;
   top:50%;
@@ -333,31 +337,144 @@ display:none;
   text-align:center;
   display:none;
 
+  background:#aec5d4;
+
 }
 
 #startButton{
 
-  color:#fff;
+  color:#2c2b47;
   position:absolute;
   top:-80px;
   height:80px;
-  background:#000;
+  background:#aec5d4;
   width:100%;
   margin-left:-150px;
   font-size:75px;
 
 }
+
+
+
 #startButton:hover{
-//background:#f00;
+  color: #ddd;
 }
 
-    #GUI{
+#title {
+    pointer-events: none;
+    font-size: 100;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    width:100%;
+    color:rgba(44,43,71, .5);
+    text-align:center;
+}
 
-      position:fixed;
-      right:0px;
-      top:0px;
-      z-index:999;
-      display: none;
 
-    }
+#GUI{
+
+  position:fixed;
+  right:0px;
+  top:0px;
+  z-index:999;
+  display: none;
+
+}
+
+
+.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto; margin-top: 100px;} 
+.embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+/*.vid-offset{margin-top: -250px}*/
+
+
+
+#MailChimp{
+    position: fixed;
+    z-index: 1000;
+    width: 400px;
+    font-size: 20px;
+    left: 50%;
+    margin-left: -220px;
+    background: rgba(255,255,255,.5);
+    padding: 20px;
+    top: 50%;
+    margin-top: -80px;
+    display:none;
+
+}
+
+
+#mc_embed_signup{
+  margin: 20px 0 0 0;
+}
+.mc-field-group{
+  display: inline-flex; 
+  width: 70%;
+}
+#subscribeField{
+  color: black; 
+  cursor: text; 
+  font-size: 20px; 
+  font-family: 'GeoSans', serif;
+  font-weight: 100; 
+  /*background-color: red; */
+  border: none;
+  border-bottom: 1px solid black;
+  height: 30px; 
+  /*padding: 5px 32px 5px 10px; */
+  margin-right: -27px; 
+  width: 100%;
+  display: block;
+  padding:10px;
+}
+
+#subscribeField:focus {
+    outline: none;
+}
+#subscribeBtn{
+  /*font-weight: 900; */
+  line-height: 5px; 
+  color: black; 
+  width: 32px; 
+  height: 32px; 
+  cursor: pointer; 
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 20px;
+  /*background-color: #555555; */
+  background-color: transparent;
+  border: none;
+  /*margin-top: 3px; */
+  /*opacity: .5;*/
+  transform: rotate(0deg);
+  transition: transform 0.1s linear; 
+}
+#subscribeBtn:hover{
+  cursor: pointer; 
+/*  background-color: white; 
+  color: black;*/
+  /*margin-left: 3px;*/
+  transform: rotate(90deg);
+  transition: transform 0.1s linear; 
+}
+#email-signup-text{
+  font-size: 15px;
+  color: #2c2b47;
+  width: 75%;
+  display: block;
+}
+
+#Close{
+  font-size:80px;
+  position:relative;
+  float:right;
+  top:-100px;
+  padding-right:20px;
+  margin-bottom: -160px;
+  color:#2c2b47;
+}
+
+#Close:hover{
+  color:#eee;
+}
     

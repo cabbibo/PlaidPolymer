@@ -79,7 +79,7 @@
 
     vec3 sC = vec3( 1. , 1. , 1. ) * specularity;
 
-    gl_FragColor.rgb =audioColor; ///newNormal * .5 + .5 ;///lookup_table_color * (vec3(.3) + audioColor*.7) +sC;
+    gl_FragColor.rgb =audioColor +  audioColor * vec3(44.,43.,71.)/255.; ///newNormal * .5 + .5 ;///lookup_table_color * (vec3(.3) + audioColor*.7) +sC;
     gl_FragColor.a = 1.;
   
   } 
