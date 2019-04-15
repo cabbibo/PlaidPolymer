@@ -289,8 +289,8 @@ var FURRY_HEAD_GEO , FURRY_HEAD_POS;
       point.add( vertex1 );*/
 
       data[ i ]     = 1000 +posX;
-      data[ i + 1 ] = 1000 +posZ;
-      data[ i + 2 ] = 1000 +-(1 - (y/size))*100;
+      data[ i + 1 ] = 100 +posZ;
+      data[ i + 2 ] = 100 + (1 - (y/size))*100;
       data[ i + 3 ] = 1;
 
     }

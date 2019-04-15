@@ -292,8 +292,10 @@ function initJelly(){
 
   
     headMesh.oldPosition.copy( headMesh.position );
-    headMesh.position.copy( (bait.position.clone().sub(headMesh.position)).normalize().multiplyScalar( 1.5 + 1.3*Math.sin(G.uniforms.time.value * 4)).add( headMesh.position));
-    headMesh.velocity.copy( headMesh.position.clone().sub(headMesh.oldPosition));
+
+    headMesh.velocity.add( bait.position.clone().sub(headMesh.position).normalize().multiplyScalar(.1));
+    headMesh.velocity.multiplyScalar( .9 );
+    headMesh.position.add( headMesh.velocity.clone().multiplyScalar( 1.5 + 1.3*Math.sin(G.uniforms.time.value * 4)) );
 
    // console.log( bait.velocity);
     this.head.update();

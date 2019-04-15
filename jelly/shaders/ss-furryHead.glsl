@@ -9,7 +9,7 @@ uniform float timer;
 
 varying vec2 vUv;
 
-const float maxVel = 5.;
+const float maxVel = 20.;
 
 const float size = 1. / 32.;
 const float hSize = size / 2.;
@@ -181,8 +181,9 @@ void main(){
   vec3 distToPoint = pointToAttractTo - pos.xyz;
 
   vec3 pointPower = distToPoint ;
-
-  p = pos.xyz +vel*.9+( pointPower );//* (noiseAmount-.6) + .8 * pointInCircle);
+  vel = vel*.9+( pointPower );
+  if( length(vel)> maxVel ){ vel = normalize(vel) * maxVel; }
+  p = pos.xyz +vel;//* (noiseAmount-.6) + .8 * pointInCircle);
   gl_FragColor = vec4( p , 1. );
 
 

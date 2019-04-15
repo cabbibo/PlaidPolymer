@@ -129,7 +129,7 @@ void main(){
       vec4 otherPos = texture2D( t_pos , vec2( vUv.x , vUv.y - size ) ); 
       
       vec3 attract = (otherPos.xyz - pos.xyz );//springForce( otherPos.xyz , pos.xyz , 20. );
-      force += attract * 300. * (1.-vUv.y * .5);
+      force += attract * 200. * (1.-vUv.y * .5);
 
      // force += flow * ( 1. -  vUv.y);
 

@@ -359,7 +359,7 @@ function Loader(  params ){
       }
 
       if( this.failures.length > 0 ){
-
+       window.location = "../"
 
       }
 
