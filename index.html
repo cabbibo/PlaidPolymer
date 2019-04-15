@@ -16,22 +16,52 @@ body{
   text-align: center;
   color:#2c2b47;
   overflow-y: scroll;
+
+
 }
 
 
 
 
 
+.container {
+    display: table;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+.helper {
+    #position: absolute;
+    #top: 50%;
+    display: table-cell;
+    vertical-align: middle;
+}
+.content {
+    #position: relative;
+    #top: -50%;
+    margin: 0 auto;
+    width: 200px;
+    border: 1px solid orange;
+}
+
 .center {
-  margin: auto;
+
   min-width: 900px;
   width: 50%;
-   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
- // border: 3px solid green;
-  padding: 100px;
+  position: static;
+  //border: 3px solid green;
+  display:block;
+
+//  padding: 100px;
+
+
+margin-left: auto;
+    margin-right: auto;
+    margin-top:auto;
+    margin-bottom:auto;
+
+
 }
 
 
@@ -42,8 +72,6 @@ body{
 #packshot img{
    max-width:100%;
    width:auto;
-
-  //border:1px solid white;
   box-shadow: 0px 0px 10px 1px #2c2b47;
 }
 
@@ -58,8 +86,6 @@ body{
 }
 
 #above{
-  padding: 30px;
-  padding-top: 100px;
 }
 
 a{
@@ -96,31 +122,64 @@ h2{
 }
 
 #base{
-   position: relative;
+  position: relative;
   bottom: 20px;
+}
+
+#base h7{
+  width:200px;
+  position: absolute;
+  min-width: 100px;
+  display: inline-block;
+  float:left;
 }
 
 </style>
 <body>
 
 
-  <div id="padLeft"></div>
   <div class="center">
     <div id="above">
     <div id="header"><h1> PLAID - POLYMER</h1></div>
     <div id="info"><h4>THE NEW ALBUM. AVAILABLE 7TH JUNE 2019 ON WARP RECORDS</h4></div>
   </div>
-    <div id="packshot"><a href="jelly"><img src="WARP303_Packshot_3000.jpg" /></a></div>
+    <div id="packshot"><img src="WARP303_Packshot_3000.jpg" /></div>
 
 
     <div id="cte"><h5>CLICK TO EXPLORE (DESKTOP ONLY)</h5></div>
     <div id="base">
       <a href="http://plaidmusic.co.uk/"><h2>PRE-ORDER</h2></a>
       <a href="http://plaidmusic.co.uk/"><img src="plaidlogo.png"/></a>
-      <a href="http://plaidmusic.co.uk/"><h2>PRE-SAVE</h2></a>
+      <a href="http://plaidmusic.co.uk/"><h2>PRE-SAVE&nbsp;&nbsp;&nbsp;</h2></a>
     </div>
   </div>
 
 </body>
+
+<script type="text/javascript">
+  
+
+
+  if( isMobileDevice() ){
+    console.log("MOBILE BABY");
+  }else{
+    console.log("No Mobile");
+    x = document.getElementById("packshot");
+    console.log( x);
+    x.addEventListener('click', function(e) {
+      window.location = "jelly"
+    });
+    x = document.getElementById("cte");
+    console.log( x );
+    x.innerHTML = "<h5>CLICK TO EXPLORE</h5>"
+  }
+
+
+  function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  };
+
+
+</script>
 
 </html>
