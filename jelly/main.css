@@ -363,10 +363,10 @@ display:none;
 
 #title {
     pointer-events: none;
-    font-size: 40;
+    font-size: 20;
     z-index: 10;
     position: fixed;
-    bottom: -40px;
+    bottom: 20px;
     right: 60px;
     //width:100%;
     color:rgba(44,43,71, .8);
@@ -460,6 +460,8 @@ display:none;
   transform: rotate(90deg);
   transition: transform 0.1s linear; 
 }
+
+
 #email-signup-text{
   font-size: 15px;
   color: #2c2b47;

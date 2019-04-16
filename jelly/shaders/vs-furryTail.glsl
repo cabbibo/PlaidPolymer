@@ -62,7 +62,7 @@ void main(){
 
   vec3 left = normalize(cross(dir, vec3(0.,0.,1.)));
 
-  vec3 fPos = pos.xyz - left * 10.  * lineWidth * (length(a)+3.)* (position.z -.5);
+  vec3 fPos = pos.xyz - left * 10.  * position.y  * lineWidth * (length(a)+3.)* (position.z -.5);
 
 
   vID = vec2(idInTail,position.y);

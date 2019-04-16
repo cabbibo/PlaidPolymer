@@ -45,7 +45,8 @@ function Poly( id , note ,name){
         t_audio:{type:"t",value:this.note.texture},
         time:G.uniforms.time,
         jelly:{type:"v3",value:headMesh.position},
-        color:{type:"v4", value:new THREE.Vector4(1,1,0,1) }
+        color:{type:"v4", value:new THREE.Vector4(44/255,43/255,71/255,1)}//new THREE.Vector4(44/255,43/255,71/255,1);
+        
       },
       vertexShader: shaders.vs.polyOutline,
       fragmentShader: shaders.fs.polyOutline,
@@ -72,10 +73,12 @@ function Poly( id , note ,name){
   this.mesh.add(this.bgMesh);
 
 
-
+  var row = Math.floor(id %4);
+  row = (row+1)%2;
 
   this.mesh.position.y = 1.3*((((id % 4)+.5)/4)-.5) * window.innerHeight;
-  this.mesh.position.x = 1.3*(((Math.floor(id /4)+.5)/5)-.5) * window.innerWidth;
+
+  this.mesh.position.x = (row-.5) * (.5 *window.innerWidth / 5) + 1*(((Math.floor(id /4)+.5)/5)-.5) * window.innerWidth;
   this.mesh.position.z = 0;//(Math.random()-.5) * 100;
 
 
@@ -155,6 +158,7 @@ Poly.prototype = {
       a.click();
       document.body.removeChild(a);
       DLD = true;*/
+      DLD = true;
 
       displaySignUp();
 
@@ -183,10 +187,11 @@ Poly.prototype = {
       this.organicMesh.scale.y = 1.1;
       this.organicMesh.scale.z = 1.1;
 
-      this.bgMesh.scale.x = 1.1;
-      this.bgMesh.scale.y = 1.1;
-      this.bgMesh.scale.z = 1.1;
-      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(1,1,1,1);
+      this.bgMesh.scale.x = 1;
+      this.bgMesh.scale.y = 1;
+      this.bgMesh.scale.z = 1;
+      //vec3(44.,43.,71.)/255.;
+      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(  174/255, 197/255, 212/255,1);;//new THREE.Vector4(44/255,43/255,71/255,1);
 
    
     }
@@ -214,7 +219,7 @@ this.organicMesh.material.uniforms.hovered.value = 1;
          this.bgMesh.scale.x = 1;
       this.bgMesh.scale.y = 1;
       this.bgMesh.scale.z = 1;
-      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(1,1,0,1);
+      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(44/255,43/255,71/255,1);//new THREE.Vector4(  174/255, 197/255, 212/255,1);
 
     }
 

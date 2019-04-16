@@ -43,22 +43,29 @@ margin-left: auto;
 
 
 #header img{
-  max-width:80%;
-   width:auto;
+ // max-width:80%;
+   height:5%;
+   z-index: 99;
+}
+
+#info{
+    z-index: 99;
 }
 
 
 #packshot{
   margin-top:-40px;
 }
+
 #packshot img{
    //max-height:70%;
    //height:100%;
-   height:70%;
+   height:60%;
 
   position: fixed;
-  top: 50%;
+  top: 55%;
   left: 50%;
+  z-index: 0;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 
@@ -78,7 +85,10 @@ margin-left: auto;
 }
 
 
-#above{  padding: 30px;
+#above{  
+  position:fixed;
+  left:50%;
+  transform: translate(-50%, 50%);
 }
 
 a{
@@ -113,10 +123,10 @@ h2{
 
 
   font-size:50px;
-  color:#fff;
+  color:#FD0;
   z-index: 999;
 
-    position: fixed;
+  position: fixed;
   top: 50%;
   left: 50%;
   /* bring your own prefixes */
@@ -172,13 +182,13 @@ h2{
 
   <div class="center">
     <div id="above">
-    <div id="header"><img src="polyText.png"/></h1></div>
+    <div id="header"><img src="plaid.png"/><br/><br/><img src="poly.png"/></div>
     <div id="info"><h4>THE NEW ALBUM. AVAILABLE 7TH JUNE 2019 ON WARP RECORDS</h4></div>
-  </div>
+    </div>
     <div id="packshot"><img src="polymer-cover-object-2.png" /></div>
 
 
-    <div id="cte" onmouseover="onOver()" onmouseout="onOut()">CLICK TO ENTER (DESKTOP ONLY)</div>
+    <div id="cte" onmouseover="onOver()" onmouseout="onOut()">ENTER <br/>(DESKTOP ONLY)</div>
     <div id="base">
       <a href="http://plaidmusic.co.uk/"><h2>PRE-ORDER</h2></a>
       <a href="http://plaidmusic.co.uk/"><img src="plaidlogo.png"/></a>
@@ -206,7 +216,7 @@ h2{
 
     x = document.getElementById("cte");
     console.log( x );
-    x.innerHTML = "CLICK TO ENTER"
+    x.innerHTML = "ENTER"
     x.addEventListener('click', function(e) {
       window.location = "jelly"
     });
@@ -308,11 +318,12 @@ console.log( cover );
   var pulse = Math.abs(Math.floor(255 * (Math.sin(t * .005)+1.5)/2.5));
     var fullC =  fullColorHex( pulse ,pulse , pulse );
 
-    //console.log( fullC )
+    console.log( pulse )
 
-    if( !isMobile ){
-    cte.style.color = fullC;//"rgba(255,255,255,"+pulse+")";
-    cte.style.opacity = pulse;
+  if( !isMobile ){
+   // cte.style.color = fullC;//"rgba(255,255,255,"+pulse+")";
+
+    cte.style.opacity = pulse/255;
   }
 
   if( hovered ){ 

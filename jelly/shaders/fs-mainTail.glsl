@@ -11,6 +11,8 @@ void main(){
 
   vec3 nNormal = vNorm;
 
+
+
   vec3 nReflection = normalize( reflect( vView , nNormal )); 
 
   float nViewDot = dot( normalize( nNormal ), normalize( vView ) );
