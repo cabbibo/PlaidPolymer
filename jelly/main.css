@@ -1,6 +1,6 @@
 html{
   color:#2c2b47;
-  background:#aec5d4 ;
+  background:#000519;
   font-family:"GeoSans";
   margin:0px;
   background-repeat:no-repeat;
@@ -11,7 +11,7 @@ html{
 
 body{
   color:#2c2b47;
-  background:#aec5d4;
+  background:#000519;
   margin: 0px;
   overflow: hidden;
 }
@@ -112,7 +112,7 @@ a:hover{
   width         : 100%;
   height        : 100%;
   
-  background:#aec5d4;
+  background:#000519;
 
 }
 
@@ -328,7 +328,7 @@ display:none;
 
   width:300px;
   height:300px;
-  color:#2c2b47;
+  color:#aec5d4;
   position:absolute;
   left:50%;
   top:50%;
@@ -337,17 +337,18 @@ display:none;
   text-align:center;
   display:none;
 
-  background:#aec5d4;
+  
+  background:#000519;
 
 }
 
 #startButton{
 
-  color:#2c2b47;
+  color:#aec5d4;
   position:absolute;
   top:-80px;
   height:80px;
-  background:#aec5d4;
+  background:#000519;
   width:100%;
   margin-left:-150px;
   font-size:75px;
@@ -362,13 +363,14 @@ display:none;
 
 #title {
     pointer-events: none;
-    font-size: 100;
+    font-size: 40;
     z-index: 10;
     position: fixed;
-    top: 0;
-    width:100%;
-    color:rgba(44,43,71, .5);
-    text-align:center;
+    bottom: -40px;
+    right: 60px;
+    //width:100%;
+    color:rgba(44,43,71, .8);
+   // text-align:center;
     display:none;
 }
 

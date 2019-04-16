@@ -3,6 +3,8 @@ uniform sampler2D t_audio;
 uniform vec3 jelly;
 uniform float active;
 
+uniform float hovered;
+
 varying vec3 vPos;
 varying vec3 vNorm;
 varying vec3 vView;
@@ -35,7 +37,9 @@ void main(){
 
   vec3 lamb = dot( nNormal , normalize(jelly - vWorld)) * vec3(1.,.4,.2);
 
-  vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 ;
+
+
+  vec3 aC = ((aColor.xyz * aColor.xyz * aColor.xyz) - .2) * 1.4 + hovered * .5;// (1.+hovered);
   gl_FragColor = vec4(max(vCol , aC ), 1.0 );
 
 }

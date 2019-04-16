@@ -55,7 +55,7 @@ function initThree(){
 
 
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setClearColor( 0xaec5d4 , 1 );
+    renderer.setClearColor( 0x000519 , 1 );
     container.appendChild( renderer.domElement );
 
     // Making sure our renderer is always the right size

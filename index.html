@@ -42,18 +42,32 @@ margin-left: auto;
 }
 
 
-
-
-
-
-#packshot img{
-   max-width:100%;
+#header img{
+  max-width:80%;
    width:auto;
-  box-shadow: 0px 0px 10px 1px #2c2b47;
+}
+
+
+#packshot{
+  margin-top:-40px;
+}
+#packshot img{
+   //max-height:70%;
+   //height:100%;
+   height:70%;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+
+   
+ // box-shadow: 0px 0px 10px 1px #2c2b47;
 }
 
 #packshot img:hover{
-    box-shadow: 0px 0px 10px 5px #2c2b47;
+   // box-shadow: 0px 0px 10px 5px #2c2b47;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -98,13 +112,37 @@ h2{
 
 
 #cte{
-  position: relative;
-  bottom: 50px;
+
+
+  font-size:50px;
+  color:#fff;
+  z-index: 999;
+
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+
 }
 
+#cte:hover{
+  text-decoration: underline;
+}
+
+
+
+
 #base{
-  position: relative;
+  position: fixed;
+  left: 50%;
+   transform: translate(-50%, 0%);
   bottom: 20px;
+}
+
+#base h2{
+   transform: translate(0%, 50%);
+
 }
 
 #base h7{
@@ -115,19 +153,32 @@ h2{
   float:left;
 }
 
+#cover{
+  width:100%;
+  height:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  background:#000519;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+}
+
 </style>
 <body>
 
+  <div id="cover"></div>
 
   <div class="center">
     <div id="above">
-    <div id="header"><h1> PLAID - POLYMER</h1></div>
+    <div id="header"><img src="polyText.png"/></h1></div>
     <div id="info"><h4>THE NEW ALBUM. AVAILABLE 7TH JUNE 2019 ON WARP RECORDS</h4></div>
   </div>
-    <div id="packshot"><img src="WARP303_Packshot_3000.jpg" /></div>
+    <div id="packshot"><img src="polymer-cover-object-2.png" /></div>
 
 
-    <div id="cte"><h5>CLICK TO EXPLORE (DESKTOP ONLY)</h5></div>
+    <div id="cte" onmouseover="onOver()" onmouseout="onOut()">CLICK TO ENTER (DESKTOP ONLY)</div>
     <div id="base">
       <a href="http://plaidmusic.co.uk/"><h2>PRE-ORDER</h2></a>
       <a href="http://plaidmusic.co.uk/"><img src="plaidlogo.png"/></a>
@@ -140,19 +191,25 @@ h2{
 <script type="text/javascript">
   
 
+  var isMobile = isMobileDevice();
 
-  if( isMobileDevice() ){
-    console.log("MOBILE BABY");
+  if( isMobile ){
+   // console.log("MOBILE BABY");
   }else{
-    console.log("No Mobile");
+   // console.log("No Mobile");
     x = document.getElementById("packshot");
     console.log( x);
     x.addEventListener('click', function(e) {
       window.location = "jelly"
     });
+
+
     x = document.getElementById("cte");
     console.log( x );
-    x.innerHTML = "<h5>CLICK TO EXPLORE</h5>"
+    x.innerHTML = "CLICK TO ENTER"
+    x.addEventListener('click', function(e) {
+      window.location = "jelly"
+    });
   }
 
 
@@ -160,6 +217,120 @@ h2{
     return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
   };
 
+
+
+
+
+
+var cte = document.getElementById("cte");
+console.log( cte);
+
+
+
+function hslToRgb(h, s, l) {
+  var r, g, b;
+
+  if (s == 0) {
+    r = g = b = l; // achromatic
+  } else {
+    function hue2rgb(p, q, t) {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    }
+
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+
+  return [ r * 255, g * 255, b * 255 ];
+}
+
+var rgbToHex = function (rgb) { 
+  var hex = Number(rgb).toString(16);
+  if (hex.length < 2) {
+       hex = "0" + hex;
+  }
+  return hex;
+};
+
+var fullColorHex = function(r,g,b) {   
+  var red = rgbToHex(r);
+  var green = rgbToHex(g);
+  var blue = rgbToHex(b);
+  return red+green+blue;
+};
+
+
+
+var startTime = 0;
+var endTime = 0;
+var hovered = false;
+
+function onOver(){
+   var d = new Date();
+    var t = d.getTime();
+    hovered = true;
+    startTime = t;
+}
+
+function onOut(){
+  hovered = false;
+
+  var d = new Date();
+  var t = d.getTime();
+  endTime = t;
+}
+
+clamp = function(num,min, max) {
+  return Math.min(Math.max(num, min), max);
+};
+
+var cover = document.getElementById("cover");
+console.log( cover );
+
+  function ani(){
+    var d = new Date();
+    var t = d.getTime();
+    //console.log(t);
+
+    var c = hslToRgb( Math.sin(t) , 1,.5);
+
+  //  console.log( c );
+
+  var pulse = Math.abs(Math.floor(255 * (Math.sin(t * .005)+1.5)/2.5));
+    var fullC =  fullColorHex( pulse ,pulse , pulse );
+
+    //console.log( fullC )
+
+    if( !isMobile ){
+    cte.style.color = fullC;//"rgba(255,255,255,"+pulse+")";
+    cte.style.opacity = pulse;
+  }
+
+  if( hovered ){ 
+    cover.style.opacity =  (t-startTime) * .001;
+    cover.style.opacity =  clamp(cover.style.opacity,0,1); 
+    console.log(cover.style.opacity);
+  }else{ 
+
+   cover.style.opacity =  (t-endTime) * .003;
+    cover.style.opacity =  1-clamp(cover.style.opacity,0,1); 
+    console.log(cover.style.opacity);
+  }
+
+    requestAnimationFrame(ani);
+  }
+
+
+ani();
 
 </script>
 

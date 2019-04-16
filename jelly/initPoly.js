@@ -4,7 +4,7 @@ function initPoly(){
 
   for( var i = 0; i < loopList.length; i++ ){
 
-    POLYS[loopList[i]] = new Poly( i, LOOPS[loopList[i]] );
+    POLYS[loopList[i]] = new Poly( i, LOOPS[loopList[i]] , loopList[i]);
 
     console.log(POLYS[loopList[i]]);
 
@@ -13,11 +13,12 @@ function initPoly(){
   
 }
 
-function Poly( id , note ){
+function Poly( id , note ,name){
 
   this.note = note;
   this.note.gain.gain.value = 0;
   this.id = id;
+  this.name = name;
 
   this.active = false;
 
@@ -43,7 +44,8 @@ function Poly( id , note ){
       uniforms:{
         t_audio:{type:"t",value:this.note.texture},
         time:G.uniforms.time,
-        jelly:{type:"v3",value:headMesh.position}
+        jelly:{type:"v3",value:headMesh.position},
+        color:{type:"v4", value:new THREE.Vector4(1,1,0,1) }
       },
       vertexShader: shaders.vs.polyOutline,
       fragmentShader: shaders.fs.polyOutline,
@@ -58,7 +60,8 @@ function Poly( id , note ){
         t_audio:{type:"t",value:this.note.texture},
         time:G.uniforms.time,
         jelly:{type:"v3",value:headMesh.position},
-        active:{type:"f",value:1}
+        active:{type:"f",value:1},
+        hovered:{type:"f",value:0},
       },
       vertexShader: shaders.vs.polyOrg,
       fragmentShader: shaders.fs.polyOrg,
@@ -179,7 +182,19 @@ Poly.prototype = {
       this.organicMesh.scale.x = 1.1;
       this.organicMesh.scale.y = 1.1;
       this.organicMesh.scale.z = 1.1;
+
+      this.bgMesh.scale.x = 1.1;
+      this.bgMesh.scale.y = 1.1;
+      this.bgMesh.scale.z = 1.1;
+      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(1,1,1,1);
+
+   
     }
+
+
+this.organicMesh.material.uniforms.hovered.value = 1;
+
+    document.getElementById("TITLE").innerHTML="<h1>"+this.name+"</h1>";
 
     console.log( this);
   },
@@ -195,7 +210,17 @@ Poly.prototype = {
       this.organicMesh.scale.x = 1;
       this.organicMesh.scale.y = 1;
       this.organicMesh.scale.z = 1;
+
+         this.bgMesh.scale.x = 1;
+      this.bgMesh.scale.y = 1;
+      this.bgMesh.scale.z = 1;
+      this.bgMesh.material.uniforms.color.value = new THREE.Vector4(1,1,0,1);
+
     }
+
+    this.organicMesh.material.uniforms.hovered.value = 0;
+
+    document.getElementById("TITLE").innerHTML="<h1></h1>";
 
 
     console.log( this);
