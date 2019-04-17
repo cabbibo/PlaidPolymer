@@ -202,7 +202,7 @@ Poly.prototype = {
 
    
     }
-NOTES.hover.play();
+    NOTES.hover.play();
 
   this.organicMesh.material.uniforms.hovered.value = 1;
 

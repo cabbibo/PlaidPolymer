@@ -281,6 +281,8 @@ v2 = new THREE.Vector3();
     });
 
     NOTES[hitList[i]] = note;
+
+    note.gain.gain.value = .4;
   //   audioController.notes.push( note );
      
     note.onLoad = function(){
@@ -335,6 +337,8 @@ v2 = new THREE.Vector3();
 
   function animate(){
 
+
+
     TWEEN.update();
 
     audioController.update();
@@ -374,8 +378,19 @@ v2 = new THREE.Vector3();
 
     for( var i = 0; i < loopList.length;i++){
       POLYS[loopList[i]].play();
+
+
      // POLYS[loopList[i]].activate();
     }
+
+     for( var i = 0; i < hitList.length;i++){
+
+      NOTES[hitList[i]].gain.gain.value = .3;//.play();
+
+    }
+
+    NOTES.goodJob.gain.gain.value = 1;
+   
    
   
   });

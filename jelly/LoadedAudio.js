@@ -129,7 +129,7 @@
 
     if( !this.looping ){
       
-      this.gain.gain.value = 1;
+      //this.gain.gain.value = 1;
 
     }
 
@@ -197,8 +197,9 @@
 
   };
 		
-  LoadedAudio.prototype.play = function(){
+  LoadedAudio.prototype.play = function( vol ){
 	
+    if( vol ){ this.gain.gain.value = vol }
     //this.startTime = this.controller.womb.time.value;
 
     this.playing = true;
