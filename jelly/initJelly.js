@@ -296,7 +296,7 @@ function initJelly(){
 
     var dir = bait.position.clone().sub(headMesh.position).normalize();
 
-    headMesh.velocity.lerp( dir , .03);
+    headMesh.velocity.lerp( dir , .02);
     headMesh.velocity.normalize();
     //headMesh.velocity.add( bait.position.clone().sub(headMesh.position).normalize().multiplyScalar(.1));
     //headMesh.velocity.multiplyScalar( .9 );

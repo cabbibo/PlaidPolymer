@@ -371,7 +371,7 @@ display:none;
     position: fixed;
     width: 150px;
     height: 150px;
-    background: white;
+    background: none;
     border-radius: 50%;
     top: 40px;
     left: 40px;
@@ -382,7 +382,7 @@ display:none;
     position: fixed;
     width: 160px;
     height: 160px;
-    background: red;
+    background: rgba(255,255,255,.3);
     border-radius: 50%;
     top: 35px;
     left: 35px;
@@ -400,6 +400,22 @@ display:none;
     margin-left: -70;
     margin-top: -10;
     text-align: center
+    opacity:.5;
+}
+
+#PreOrder a:hover{
+  opacity: 1;
+}
+
+#PreOrder img{
+  width: 150px;
+  margin-top: -65;
+  margin-left: -5;
+  opacity:.5;
+}
+
+#PreOrder img:hover{
+  opacity:1;
 }
 
 
