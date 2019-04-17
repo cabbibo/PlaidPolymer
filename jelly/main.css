@@ -375,6 +375,7 @@ display:none;
     border-radius: 50%;
     top: 40px;
     left: 40px;
+    display:none;
 }
 #PreOrder:hover{
     color: #fff;
