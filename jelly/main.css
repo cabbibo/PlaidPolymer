@@ -395,14 +395,14 @@ display:none;
 #MailChimp{
     position: fixed;
     z-index: 1000;
-    width: 400px;
+    width: 300px;
     font-size: 20px;
     left: 50%;
-    margin-left: -220px;
+    margin-left: -170px;
     background: rgba(255,255,255,.5);
     padding: 20px;
     top: 50%;
-    margin-top: -80px;
+    margin-top: -180px;
     display:none;
 
 }
@@ -411,10 +411,19 @@ display:none;
 #mc_embed_signup{
   margin: 20px 0 0 0;
 }
+
 .mc-field-group{
-  display: inline-flex; 
-  width: 70%;
+  display: block; 
+//  padding:10px;
+  width: 100%;
 }
+
+.mc-field-group input{
+  display: block; 
+//  padding:10px;
+  width: 100%;
+}
+
 #subscribeField{
   color: black; 
   cursor: text; 
@@ -423,18 +432,131 @@ display:none;
   font-weight: 100; 
   /*background-color: red; */
   border: none;
-  border-bottom: 1px solid black;
+  border: 1px solid  #2c2b47;
   height: 30px; 
   /*padding: 5px 32px 5px 10px; */
-  margin-right: -27px; 
+  margin-right: 0px; 
   width: 100%;
   display: block;
   padding:10px;
 }
 
+
+
+#subscribeField:hover{
+  color: black; 
+  cursor: text; 
+  font-size: 20px; 
+  font-family: 'GeoSans', serif;
+  font-weight: 100; 
+  /*background-color: red; */
+  border: none;
+  border: 2px solid  #2c2b47;
+  height: 30px; 
+  /*padding: 5px 32px 5px 10px; */
+  margin-right: 0px; 
+  width: 100%;
+  display: block;
+  padding:10px;
+  background:#fff;
+}
+
+.inline-label { 
+    white-space: nowrap;
+    max-width: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float:left;     
+}
+
+input{
+  border:3px solid  #2c2b47;
+    font-size: 20px; 
+  font-family: 'GeoSans', serif;
+}
+
+input:hover{
+  border:3px solid white;
+  color:white;
+  background: #2c2b47;
+
+}
+
+#addUp{
+  font-size:25px;
+  padding-top: 10px;
+  margin-bottom: 3px;
+  margin-top:6px;
+}
+
+#checkbox1{
+  -webkit-appearance: none;
+  background-color: #fafafa;
+  border: 1px solid #cacece;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+  padding: 10px;
+  margin:10px;
+  margin-top: 2px;
+  margin-left: 0px;
+  margin-right:15px;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+}
+
+#checkbox1:active, #checkbox1:checked:active {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+#checkbox1:checked {
+  background-color: #e9ecee;
+  border: 1px solid #adb8c0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+  color: #99a1a7;
+  background: #2c2b47;
+}
+
+#checkbox1:checked:after {
+  content: '\2714';
+  font-size: 15px;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  color: #99a1a7;
+  background: #2c2b47;
+}
+
+#checkbox2{
+  font-size:18px;
+  margin-top: -50px;
+}
+
+
+#mc-embedded-subscribe{
+  font-size:45px;
+  width:80%;
+  position:absolute;
+  margin-top:-30px;
+  left:50%;
+  transform:translate(-50%);
+}
+
+.clear{
+
+  text-align: center;
+  display:inline-block;
+  padding: 20px;
+  padding-top: 40px;
+}
+
+#xtraSub{
+  padding-bottom:40px;
+}
+
 #subscribeField:focus {
     outline: none;
 }
+
 #subscribeBtn{
   /*font-weight: 900; */
   line-height: 5px; 
@@ -463,18 +585,18 @@ display:none;
 
 
 #email-signup-text{
-  font-size: 15px;
+  font-size: 25px;
   color: #2c2b47;
   width: 75%;
   display: block;
 }
 
 #Close{
-  font-size:80px;
+  font-size:45px;
   position:relative;
   float:right;
-  top:-100px;
-  padding-right:20px;
+  top:-5px;
+  padding-right:10px;
   margin-bottom: -160px;
   color:#2c2b47;
 }

@@ -250,7 +250,8 @@ function initJelly(){
         headMesh.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 30 && 
         POLYS[loopList[i]].active == true
       ){
-        POLYS[loopList[i]].select();
+        //NOTES.jelly.play();
+        POLYS[loopList[i]].jellyDeactivate();
       }
     }
 

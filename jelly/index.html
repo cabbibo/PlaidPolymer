@@ -16,6 +16,9 @@
   </div>
 
   <div id="MailChimp">
+
+
+        <div id="Close" onclick="doClick()">X</div>
     
     <div class="headline" >
         <!-- <h5>Experience</h5> -->
@@ -28,16 +31,18 @@
 <!-- Begin Mailchimp Signup Form -->
 <div id="mc_embed_signup">
 <form action="https://warp.us7.list-manage.com/subscribe/post?u=92da423b0a560b89a4b558a36&amp;id=e12706f19b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
+<div id="mc_embed_signup_scroll">
   
 <div class="mc-field-group">
-  <label for="mce-EMAIL">Email Address </label>
-  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+  <label id="addUp" for="mce-EMAIL">Email Address </label>
+  <input id="subscribeField" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
 </div>
-<div class="mc-field-group input-group">
-    <strong>Additional Updates </strong>
-    <ul><li><input type="checkbox" value="1" name="group[8541][1]" id="mce-group[8541]-8541-0"><label for="mce-group[8541]-8541-0">Subscribe to WARP</label></li>
-</ul>
+
+<div class="mc-field-group input-group" id="xtraSub">
+    <p id="addUp">Additional Updates </p>
+    <input class="inline-label" id="checkbox1" type="checkbox" value="1" name="group[8541][1]" id="mce-group[8541]-8541-0">
+    <label  id="checkbox2" for="mce-group[8541]-8541-0">Subscribe to WARP</label>
+
 </div>
   <div id="mce-responses" class="clear">
     <div class="response" id="mce-error-response" style="display:none"></div>
@@ -72,7 +77,6 @@
         <!--End mc_embed_signup-->
 
 
-        <div id="Close" onclick="doClick()">X</div>
         
         
       </div>
@@ -230,6 +234,8 @@ v2 = new THREE.Vector3();
     "Voc"
   ];
 
+
+
   for( var i = 0; i < loopList.length; i++ ){
     loader.beginLoading();
     var newName = "Maru" + loopList[i] + "Loop.mp3";
@@ -246,6 +252,26 @@ v2 = new THREE.Vector3();
 
   }
 
+
+  NOTES = {}
+
+  var hitList = ["activate","deactivate","jelly","hover","goodJob"];
+
+    for( var i = 0; i < hitList.length; i++ ){
+    loader.beginLoading();
+    var newName =  hitList[i] + ".wav";
+    var note = new LoadedAudio( audioController , newName , {
+      looping:false 
+    });
+
+    NOTES[hitList[i]] = note;
+  //   audioController.notes.push( note );
+     
+    note.onLoad = function(){
+      this.endLoading();
+    }.bind( loader );
+
+  }
 
   var looper          = new Looper( audioController , G.uniforms.time , {
 

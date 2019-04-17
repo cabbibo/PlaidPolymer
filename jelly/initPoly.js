@@ -137,6 +137,8 @@ Poly.prototype = {
 
     this.note.gain.gain.value = 1;
 
+
+
     var canDL = true;
     for( var i = 0; i < loopList.length; i++ ){
       if( POLYS[loopList[i]].active == false ){ canDL = false; }
@@ -161,7 +163,10 @@ Poly.prototype = {
       DLD = true;
 
       displaySignUp();
+      NOTES.goodJob.play();
 
+    }else{
+       NOTES.activate.play();
     }
   },
 
@@ -171,6 +176,7 @@ Poly.prototype = {
     this.mesh.material.uniforms.active.value = 1;
     this.organicMesh.material.uniforms.active.value = 1;
     this.note.gain.gain.value = 0;
+    
     scene.add( this.mesh );
     scene.remove( this.organicMesh );
   },
@@ -178,6 +184,7 @@ Poly.prototype = {
 
   hoverOver: function(){
     
+
     if( this.active == false ){
       this.mesh.scale.x = 1.1;
       this.mesh.scale.y = 1.1;
@@ -195,9 +202,9 @@ Poly.prototype = {
 
    
     }
+NOTES.hover.play();
 
-
-this.organicMesh.material.uniforms.hovered.value = 1;
+  this.organicMesh.material.uniforms.hovered.value = 1;
 
     document.getElementById("TITLE").innerHTML="<h1>"+this.name+"</h1>";
 
@@ -233,31 +240,48 @@ this.organicMesh.material.uniforms.hovered.value = 1;
 
   select:function(){
 
-  if( this.active == false ){
-    this.mesh.scale.x = 1.5;
-    this.mesh.scale.y = 1.5;
-    this.mesh.scale.z = 1.5;
+    if( this.active == false ){
+      this.mesh.scale.x = 1.5;
+      this.mesh.scale.y = 1.5;
+      this.mesh.scale.z = 1.5;
 
-    this.organicMesh.scale.x = 1.5;
-    this.organicMesh.scale.y = 1.5;
-    this.organicMesh.scale.z = 1.5;
-    this.activate();
+      this.organicMesh.scale.x = 1.5;
+      this.organicMesh.scale.y = 1.5;
+      this.organicMesh.scale.z = 1.5;
+      this.activate();
 
-    Jelly.updateBaitPos( this.mesh.position );
-    Jelly.bait.searching = this;
+      Jelly.updateBaitPos( this.mesh.position );
+      Jelly.bait.searching = this;
 
-  }else{
-    this.mesh.scale.x = 1;
-    this.mesh.scale.y = 1;
-    this.mesh.scale.z = 1;
+    }else{
+      this.mesh.scale.x = 1;
+      this.mesh.scale.y = 1;
+      this.mesh.scale.z = 1;
 
 
-    this.organicMesh.scale.x = 1.5;
-    this.organicMesh.scale.y = 1.5;
-    this.organicMesh.scale.z = 1.5;
-    this.deactivate();
-  }
+      this.organicMesh.scale.x = 1.5;
+      this.organicMesh.scale.y = 1.5;
+      this.organicMesh.scale.z = 1.5;
+      NOTES.deactivate.play();
+      this.deactivate();
+    }
   },
+
+  jellyDeactivate:function(){
+
+      this.mesh.scale.x = 1;
+      this.mesh.scale.y = 1;
+      this.mesh.scale.z = 1;
+
+
+      this.organicMesh.scale.x = 1.5;
+      this.organicMesh.scale.y = 1.5;
+      this.organicMesh.scale.z = 1.5;
+      NOTES.jelly.play();
+      this.deactivate();
+
+  },
+
 
   deselect:function(){
 
