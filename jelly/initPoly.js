@@ -269,6 +269,8 @@ NOTES.hover.play();
 
   jellyDeactivate:function(){
 
+      console.log("HEY");
+
       this.mesh.scale.x = 1;
       this.mesh.scale.y = 1;
       this.mesh.scale.z = 1;

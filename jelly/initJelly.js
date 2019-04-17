@@ -247,7 +247,7 @@ function initJelly(){
   
     for( var i = 0; i < loopList.length; i++ ){
       if( 
-        headMesh.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 30 && 
+        headMesh.position.clone().sub( POLYS[loopList[i]].mesh.position ).length()  < 50 && 
         POLYS[loopList[i]].active == true
       ){
         //NOTES.jelly.play();
@@ -256,11 +256,11 @@ function initJelly(){
     }
 
       //console.log( head.position.clone().sub( bait.position ).length() );
-    if( headMesh.position.clone().sub( bait.position ).length() < 30 ){
+    if( headMesh.position.clone().sub( bait.position ).length() < 50 ){
 
 
       if( bait.searching != null ){
-        bait.searching.select();
+        bait.searching.jellyDeactivate();
       }
 
       var activated = [];
@@ -296,14 +296,14 @@ function initJelly(){
 
     var dir = bait.position.clone().sub(headMesh.position).normalize();
 
-    headMesh.velocity.lerp( dir , .01);
+    headMesh.velocity.lerp( dir , .03);
     headMesh.velocity.normalize();
     //headMesh.velocity.add( bait.position.clone().sub(headMesh.position).normalize().multiplyScalar(.1));
     //headMesh.velocity.multiplyScalar( .9 );
     
 
     var v = headMesh.velocity.dot( dir );
-    console.log( v );
+    //console.log( v );
     headMesh.position.add( headMesh.velocity.clone().multiplyScalar( 1.1 + 1.0*Math.sin(G.uniforms.time.value * 4)).multiplyScalar( (v + 2) / 2) );
 
    // console.log( bait.velocity);
