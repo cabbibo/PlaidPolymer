@@ -3,6 +3,8 @@ var failureTitleText = "Oh No!";
 var failureDialog = "Your Browser is missing the following Technologies:<br/>However, click the image to download 'System Preferences' ";
 var failureLink = 'System_Preferences.zip';
 var failureImg = 'icons/albumCover.png';
+var p1Source = '../plaid.png'
+var p2Source = '../poly.png'
 
 function Loader(  params ){
 
@@ -22,6 +24,17 @@ function Loader(  params ){
     
     this.curtain = document.createElement('div');
     this.curtain.id = "curtain";
+
+    this.p1 = document.createElement('img');
+    this.p1.src = p1Source;
+    this.p1.id = "p1Curtain";
+    this.curtain.appendChild(this.p1);
+
+    this.p2 = document.createElement('img');
+    this.p2.src = p2Source;
+    this.p2.id = "p2Curtain";
+    this.curtain.appendChild(this.p2);
+
 
     document.body.appendChild( this.curtain );
 
@@ -300,11 +313,11 @@ function Loader(  params ){
 
       var button = document.createElement('a');
       button.id = "startButton";
-      button.innerHTML = 'START';
+      button.innerHTML = 'PLAY';
 
       this.startInfo = document.createElement('div');
       this.startInfo.id = "startInfo";
-      this.startInfo.innerHTML = info;
+      //this.startInfo.innerHTML = info;
 
       this.startInfo.appendChild( button );
 

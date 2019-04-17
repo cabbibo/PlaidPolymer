@@ -326,21 +326,82 @@ display:none;
 
 #startInfo{
 
-  width:300px;
-  height:300px;
-  color:#aec5d4;
-  position:absolute;
-  left:50%;
-  top:50%;
-  margin-left:-150px;
-  margin-top:10px;
-  text-align:center;
-  display:none;
-
-  
-  background:#000519;
+    /* padding: 30px; */
+    color: #aec5d4;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 250px;
+    margin-left: -100px;
+    margin-top: 30px;
+    text-align: center;
+    display: none;
+    background: #000519;
 
 }
+
+#p1Curtain{
+    top: 50%;
+    height: 15%;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-200%);
+    -webkit-filter: hue-rotate(0deg) saturate(35%) brightness(150%);
+  filter: hue-rotate(0deg) saturate(35%) brightness(150%);
+
+}
+
+
+
+#p2Curtain{
+    top: 50%;
+    height: 15%;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,100%);
+    -webkit-filter: hue-rotate(0deg) saturate(35%) brightness(150%);
+  filter: hue-rotate(0deg) saturate(35%) brightness(150%);
+}
+
+#PreOrder{
+      color: #fff;
+    z-index: 99;
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 50%;
+    top: 40px;
+    left: 40px;
+}
+#PreOrder:hover{
+    color: #fff;
+    z-index: 99;
+    position: fixed;
+    width: 160px;
+    height: 160px;
+    background: red;
+    border-radius: 50%;
+    top: 35px;
+    left: 35px;
+}
+
+#PreOrder a{
+    color: #000;
+    z-index: 99;
+    position: absolute;
+    width: 140px;
+    height: 20px;
+    vertical-align: middle;
+    top: 50%;
+    left: 50%;
+    margin-left: -70;
+    margin-top: -10;
+    text-align: center
+}
+
 
 #startButton{
 

@@ -74,7 +74,7 @@ function Poly( id , note ,name){
 
 
   var row = Math.floor(id %4);
-  row = (row+1)%2;
+  row = (row)%2;
 
   this.mesh.position.y = 1.3*((((id % 4)+.5)/4)-.5) * window.innerHeight;
 
