@@ -1,7 +1,44 @@
+<!--
+
+
+Hey There! I see you are looking at the source and wanted to warn/inform you of a few things:
+
+First off, as usual you are looking at a piece that is more artistic than technical,
+I have no idea what I am doing ( especially in the HTML / CSS ) so please forgive any
+hilarious oversights. That means looking at the source on this page *probably* won't 
+teach you anything except what *not* to do. I would progress into the Maru directory 
+for the fun stuff!
+
+Second off, if you are wondering 'how in the heck does this work', Check out the 
+library I created for doing physics based gpu programming in the web over at:
+
+http://cabbi.bo/PhysicsRenderer/
+
+There are also a few other pieces of code I think are pretty usuable such as
+
+ShaderLoader ( http://cabbi.bo/ShaderLoader/ )
+Looper
+LoadedAudio
+
+Other than that, you will be digging into a little bit of code that is like the 
+original sketch that gets painted over and hidden forever. That being said, if 
+you want to know more *please* reach out to me on twitter.
+
+
+I love you and thanks for stopping by!
+@cabbibo
+
+
+--> 
+
+
 <html>
 
+
+
 <head>
-  <title>Plaid - Polymer</title>
+
+
 
 
   <!-- Google Tag Manager -->
@@ -11,8 +48,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5W6MMFQ');</script>
 <!-- End Google Tag Manager -->
+<title>Plaid - Polymer</title>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Plaid">
+
+<meta name="description" content="The new album. Available 7th June 2019 on Warp Records">
+<meta name="keywords" content="plaid, polymer, warp, records, maru, the digging remedy, scintilli not for threes, reachy prints, double figure, rest proof clockwork, mbuki mvuki, heaven's door, greedy baby, spokes, parts in the post, trainer">
+
+<meta name="distribution" content="Global">
+<meta name="format-detection" content="telephone=no">
+
+<link rel="icon shortcut" href="https://plaid.warp.net/images/favicon.png">
+<link rel="apple-touch-icon" href="https://plaid.warp.net/images/shortcut.png">
+
+
+<meta property="og:title" content="Plaid - Polymer">
+<meta property="og:type" content="website">
+<meta property="og:description" content="The new album. Available 7th June 2019 on Warp Records">
+<meta property="og:url" content="http://www.pppolymer.net">
+<meta property="og:image" content="http://www.pppolymer.net/share.jpg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Plaid">
+
+
 
 <style>
+
+
+
+
 
  @font-face {
   font-family: "Alte";
@@ -208,9 +274,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div id="cte" onmouseover="onOver()" onmouseout="onOut()">ENTER <br/>(DESKTOP ONLY)</div>
     <div id="base">
-      <a href="http://plaidmusic.co.uk/"><h2>PRE-ORDER</h2></a>
+      <a href="https://plaid.warp.net/"><h2>PRE-ORDER</h2></a>
       <a href="http://plaidmusic.co.uk/"><img src="plaidlogo.png"/></a>
-      <a href="http://plaidmusic.co.uk/"><h2>PRE-SAVE&nbsp;&nbsp;&nbsp;</h2></a>
+      <a href="https://plaid.ffm.to/polymer-pre"><h2>PRE-SAVE&nbsp;&nbsp;&nbsp;</h2></a>
     </div>
   </div>
 
@@ -226,14 +292,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }else{
    // console.log("No Mobile");
     x = document.getElementById("packshot");
-    console.log( x);
+    //console.log( x);
     x.addEventListener('click', function(e) {
       window.location = "Maru"
     });
 
 
     x = document.getElementById("cte");
-    console.log( x );
+    //console.log( x );
     x.innerHTML = "ENTER"
     x.addEventListener('click', function(e) {
       window.location = "Maru"
@@ -322,7 +388,7 @@ clamp = function(num,min, max) {
 };
 
 var cover = document.getElementById("cover");
-console.log( cover );
+//console.log( cover );
 
   function ani(){
     var d = new Date();
@@ -336,7 +402,7 @@ console.log( cover );
   var pulse = Math.abs(Math.floor(255 * (Math.sin(t * .005)+1.5)/2.5));
     var fullC =  fullColorHex( pulse ,pulse , pulse );
 
-    console.log( pulse )
+    //console.log( pulse )
 
   if( !isMobile ){
    // cte.style.color = fullC;//"rgba(255,255,255,"+pulse+")";
@@ -352,7 +418,7 @@ console.log( cover );
 
    cover.style.opacity =  (t-endTime) * .003;
     cover.style.opacity =  1-clamp(cover.style.opacity,0,1); 
-    console.log(cover.style.opacity);
+   // console.log(cover.style.opacity);
   }
 
     requestAnimationFrame(ani);

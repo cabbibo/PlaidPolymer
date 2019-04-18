@@ -117,15 +117,15 @@ function Loader(  params ){
 
     updateLoadBar: function(){
 
-      console.log("update Load Barr")
+     // //console.log("update Load Barr")
 
-      console.log( this.numberToLoad + " ,  " + this.numberLoaded );
+     // //console.log( this.numberToLoad + " ,  " + this.numberLoaded );
 
-      //console.log('HELLOS');
-      console.log(this.numberToLoad);
-      console.log(window.innerWidth);
+      ////console.log('HELLOS');
+      //console.log(this.numberToLoad);
+      //console.log(window.innerWidth);
       this.loadBarAddAmout = window.innerWidth / this.numberToLoad;
-      console.log( this.loadBarAddAmount );
+      //console.log( this.loadBarAddAmount );
 
       var loadBarWidth = (this.loadBarAddAmount/this.numberToLoad) * this.numberLoaded;
       this.loadBar.style.width = loadBarWidth + "px";
@@ -166,11 +166,11 @@ function Loader(  params ){
 
       for( var i = 0; i < this.conditions.length; i++ ){
 
-        console.log( 'conditions checked' );
+        //console.log( 'conditions checked' );
         var c = this.conditions[i];
 
-        console.log( c );
-        console.log( c[0] );
+        //console.log( c );
+        //console.log( c[0] );
         if( c[0] ){
           c[1];
           this.conditions.splice( i , 1 );
@@ -263,7 +263,7 @@ function Loader(  params ){
       var top = hHalf - yHalf;
       var left = wHalf - xHalf;
 
-      console.log( top );
+      //console.log( top );
       if( top < 5 ) top = 5;
       if( left < 5 ) left = 5;
 
@@ -271,7 +271,7 @@ function Loader(  params ){
       this.failureDialog.style.left = left + "px";
 
 
-      console.log( this.failureDialog.clientHeight );
+      //console.log( this.failureDialog.clientHeight );
 
     },
 
@@ -283,7 +283,7 @@ function Loader(  params ){
 
       if( !renderer ){
       
-        console.log( 'HELLO we have loaded it');
+        //console.log( 'HELLO we have loaded it');
         init();
 
       $("#startInfo").fadeIn(1000);
@@ -294,7 +294,7 @@ function Loader(  params ){
 
 
       }else{
-        //console.log( 'HELLO2');
+        ////console.log( 'HELLO2');
         if( !this.failures.length ){
         
           $("#startInfo").fadeIn(1000);
@@ -340,7 +340,7 @@ function Loader(  params ){
       if( !this.hasStarted ){
        //this.onStart();
       }else{
-        console.log( 'ALREADY STARTED!!!!' );
+        //console.log( 'ALREADY STARTED!!!!' );
       }
 
       this.hasStarted = true;
