@@ -11,13 +11,13 @@ function initThree(){
     );
 
   // placing our camera position so it can see everything
-  camera.position.y = 150;
-  camera.position.z = 1;
-  camera.position.x = 1;
+  camera.position.y = 0;
+  camera.position.z = 150;
+  camera.position.x = 0;
 
-  camera.lookAt( new THREE.Vector3() );
+  //camera.lookAt( new THREE.Vector3() );
 
-  objectControls = new ObjectControls(camera);
+ objectControls = new ObjectControls(camera);
 
 
   var m = new THREE.Mesh(

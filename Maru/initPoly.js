@@ -1,5 +1,7 @@
 
 DLD = false;
+
+var raycaster = new THREE.Raycaster();
 function initPoly(){
 
   for( var i = 0; i < loopList.length; i++ ){
@@ -74,13 +76,67 @@ function Poly( id , note ,name){
 
 
   var row = Math.floor(id %4);
-  row = (row)%2;
+  row = (row+1)%2;
 
-  this.mesh.position.y = 1.3*((((id % 4)+.5)/4)-.5) * window.innerHeight;
+
+var targetZ = 150;
+var distance = -1000;
+
+
+var vec = new THREE.Vector3(); // create once and reuse
+var pos = new THREE.Vector3(); // create once and reuse
+
+var topLeft = new THREE.Vector3();
+var topRight = new THREE.Vector3();
+var bottomLeft = new THREE.Vector3();
+var bottomRight = new THREE.Vector3();
+
+
+vec.set( -.8, 1, 0.5 );
+raycaster.setFromCamera( vec, camera );
+vec.copy(camera.position);
+vec.add( raycaster.ray.direction.clone().multiplyScalar(1300));
+
+topLeft.copy( vec );
+
+vec.set( .8, 1, 0.5 );
+raycaster.setFromCamera( vec, camera );
+vec.copy(camera.position);
+vec.add( raycaster.ray.direction.clone().multiplyScalar(1300));
+
+topRight.copy( vec );
+
+vec.set( -.8, -1, 0.5 );
+raycaster.setFromCamera( vec, camera );
+vec.copy(camera.position);
+vec.add( raycaster.ray.direction.clone().multiplyScalar(1300));
+
+bottomLeft.copy( vec );
+
+vec.set( .8, -1, 0.5 );
+raycaster.setFromCamera( vec, camera );
+vec.copy(camera.position);
+vec.add( raycaster.ray.direction.clone().multiplyScalar(1300));
+
+bottomRight.copy( vec );
+
+left = new THREE.Vector3().copy( topLeft ).sub( topRight );
+up = new THREE.Vector3().copy( topLeft ).sub( bottomLeft );
+
+
+var leftVal = ((id % 4)+.5)/4
+var upVal = (((Math.floor(id /4)+.25)+(row * .5))/5)
+
+this.mesh.position.copy(topLeft).add(left.multiplyScalar(-upVal)).add(up.multiplyScalar(-leftVal));
+
+console.log( this.mesh.position );
+
+
+ /* this.mesh.position.y = 1.3*((((id % 4)+.5)/4)-.5) * window.innerHeight;
 
   this.mesh.position.x = (row-.5) * (.5 *window.innerWidth / 5) + 1*(((Math.floor(id /4)+.5)/5)-.5) * window.innerWidth;
   this.mesh.position.z = 0;//(Math.random()-.5) * 100;
-
+*/
 
   this.organicMesh.position.copy( this.mesh.position );
   this.mesh.material.map = this.note.texture;
