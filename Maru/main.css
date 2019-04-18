@@ -17,6 +17,8 @@ body{
 }
 
 
+
+
 #container{
 
  width      : 100%;
@@ -444,14 +446,35 @@ display:none;
     font-size: 20;
     z-index: 10;
     position: fixed;
-    bottom: 20px;
-    right: 60px;
+    bottom: 40px;
+    right: 20px;
     //width:100%;
     color:rgba(44,43,71, .8);
    // text-align:center;
     display:none;
 }
 
+
+#SHARE{
+  position:absolute;
+  bottom:0px;
+  right:0px;
+  z-index: 999;
+}
+
+#SHARE a{
+opacity: .3;
+}
+
+#SHARE a:hover{
+opacity: 1;
+}
+
+#SHARE img{
+width:50px;
+height:50px;
+padding:5px;
+}
 
 #GUI{
 
